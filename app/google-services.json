@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1028668474268",
+    "project_id": "movieapp-b3426",
+    "storage_bucket": "movieapp-b3426.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028668474268:android:c9876fc8a288e0891e3e59",
+        "android_client_info": {
+          "package_name": "com.zaaydar.movieapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCv6xIL0BsLmmGalMEEf9IdyIacAmFsg-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

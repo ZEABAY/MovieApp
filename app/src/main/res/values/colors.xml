@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="app_background">#24233C</color>
+    <color name="card_background">#555590</color>
+    <color name="card_text">#FFF</color>
+    <color name="card_header">#F1F1F1</color>
+    <color name="card_info">#C1C11C</color>
+    <color name="card_button">#0EABF8</color>
+
+    <!-- Login -->
+    <color name="login_screen_background">#001528</color>
+    <color name="login_text_holder">#B0A48E</color>
+    <color name="login_button">#082E51</color>
+</resources>
