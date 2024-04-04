@@ -4,8 +4,11 @@ plugins {
 
     // SafeArgs
     id("androidx.navigation.safeargs.kotlin")
-    //firebase
+    // Firebase
     id("com.google.gms.google-services")
+    // Parcelize
+    id("kotlin-parcelize")
+
 }
 
 android {
@@ -48,6 +51,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -62,5 +66,22 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx")
 
+    // Gson
+    //implementation("com.google.code.gson:gson:2.10.1")
 
+    // Retrofit
+    val ret_version = "2.9.0"
+    implementation("com.squareup.retrofit2:retrofit:$ret_version")
+    annotationProcessor("com.squareup.retrofit2:retrofit:$ret_version")
+    implementation("com.squareup.retrofit2:converter-gson:$ret_version")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:$ret_version")
+
+
+    //RxJava
+    implementation("io.reactivex.rxjava2:rxjava:2.2.9")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    //Glide
+    val gli_ver = "4.16.0"
+    implementation("com.github.bumptech.glide:glide:$gli_ver")
 }

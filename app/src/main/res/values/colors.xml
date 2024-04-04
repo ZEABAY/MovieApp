@@ -14,4 +14,5 @@
     <color name="login_screen_background">#001528</color>
     <color name="login_text_holder">#B0A48E</color>
     <color name="login_button">#082E51</color>
+    <color name="red">#FF0000</color>
 </resources>

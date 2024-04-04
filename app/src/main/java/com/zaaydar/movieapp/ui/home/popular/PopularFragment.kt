@@ -1,0 +1,72 @@
+package com.zaaydar.movieapp.ui.home.popular
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.zaaydar.movieapp.databinding.FragmentPopularBinding
+
+class PopularFragment : Fragment() {
+    private lateinit var binding: FragmentPopularBinding
+
+    private lateinit var popularViewModel: PopularViewModel
+    private var popularAdapter = PopularAdapter(arrayListOf())
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentPopularBinding.inflate(layoutInflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        popularViewModel = ViewModelProvider(this)[PopularViewModel::class.java]
+        popularViewModel.getPopularMoviesFromApi()
+
+        binding.rvPopular.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = popularAdapter
+        }
+
+        observeLiveData()
+    }
+
+    private fun observeLiveData() {
+        popularViewModel.popularMovies.observe(viewLifecycleOwner) { populars ->
+            populars?.let {
+                binding.apply {
+                    rvPopular.visibility = View.VISIBLE
+                    pbLoading.visibility = View.GONE
+                    popularAdapter.updatePopularList(populars)
+                }
+            }
+        }
+
+        popularViewModel.error.observe(viewLifecycleOwner) { error ->
+            error?.let {
+                binding.apply {
+                    tvError.visibility = if (error) View.VISIBLE else View.GONE
+                }
+            }
+        }
+
+        popularViewModel.loading.observe(viewLifecycleOwner) { loading ->
+            loading?.let {
+                binding.apply {
+                    if (loading) {
+                        tvError.visibility = View.GONE
+                        rvPopular.visibility = View.GONE
+                        pbLoading.visibility = View.VISIBLE
+                    } else {
+                        tvError.visibility = View.GONE
+                    }
+                }
+            }
+        }
+    }
+
+}

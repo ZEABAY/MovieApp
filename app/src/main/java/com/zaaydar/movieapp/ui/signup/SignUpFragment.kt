@@ -12,7 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.zaaydar.movieapp.databinding.FragmentSignUpBinding
-import com.zaaydar.movieapp.ui.denemeler.DenemeActivity
+import com.zaaydar.movieapp.ui.main.MainActivity
 
 
 class SignUpFragment : Fragment() {
@@ -54,7 +54,7 @@ class SignUpFragment : Fragment() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    val intent = Intent(context, DenemeActivity::class.java)
+                    val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }

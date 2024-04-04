@@ -12,7 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.zaaydar.movieapp.databinding.FragmentSignInBinding
-import com.zaaydar.movieapp.ui.denemeler.DenemeActivity
+import com.zaaydar.movieapp.ui.main.MainActivity
 
 class SignInFragment : Fragment() {
 
@@ -38,6 +38,11 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
+        // TODO skip login page
+        /*val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+         */
         binding.btnSignUp.setOnClickListener {
             val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
             Navigation.findNavController(it).navigate(action)
@@ -55,7 +60,7 @@ class SignInFragment : Fragment() {
         if (email.isNotEmpty() && password.isNotEmpty()) {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    val intent = Intent(context, DenemeActivity::class.java)
+                    val intent = Intent(context, MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }
