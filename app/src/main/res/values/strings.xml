@@ -27,4 +27,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error">ERROR</string>
+    <string name="movie_name_holder">MovieName</string>
+    <string name="categories_holder">Categories</string>
 </resources>

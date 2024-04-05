@@ -13,6 +13,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no"
         app:srcCompat="@drawable/movieapp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,65 +30,51 @@
 
         <TextView
             android:id="@+id/tvMovieName"
-            android:layout_width="175dp"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="MovieName"
+            android:text="@string/movie_name_holder"
             android:textColor="@color/card_header"
             android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tvMovieCategories"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvMovieCategories"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="32dp"
-            android:text="Categories"
+            android:layout_marginBottom="20dp"
+            android:maxWidth="180dp"
+            android:textSize="14sp"
+            android:text="@string/categories_holder"
             android:textColor="@color/card_text"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieName" />
-
-        <TextView
-            android:id="@+id/tvMoviePopularity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="xxxxxx reviews"
-            android:textColor="@color/card_info"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/rbRate"
+            app:layout_constraintStart_toStartOf="@+id/rbRate" />
 
         <ImageView
             android:id="@+id/iwFav"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="3dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:importantForAccessibility="no"
             app:srcCompat="@drawable/emptyheart" />
 
         <RatingBar
             android:id="@+id/rbRate"
             style="?android:ratingBarStyleIndicator"
-            android:layout_width="184dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:isIndicator="true"
             android:numStars="5"
             android:progressTint="#FFFF00"
             android:stepSize="0.1"
-            app:layout_constraintBottom_toTopOf="@+id/tvMoviePopularity"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovieCategories" />
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
