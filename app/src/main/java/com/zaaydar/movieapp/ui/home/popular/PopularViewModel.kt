@@ -39,7 +39,6 @@ class PopularViewModel : ViewModel() {
                                 item.id,
                                 item.title,
                                 item.genreIds,
-                                item.popularity,
                                 item.voteAverage,
                                 item.posterPath
                             )

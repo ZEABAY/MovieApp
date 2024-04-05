@@ -9,8 +9,6 @@ data class PopularMoviesDto(
     val title: String,
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
-    @SerializedName("popularity")
-    val popularity: Double,
     @SerializedName("vote_average")
     val voteAverage: Double,
     @SerializedName("poster_path")
