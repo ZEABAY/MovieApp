@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.service
+package com.zaaydar.movieapp.data
 
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesResponse

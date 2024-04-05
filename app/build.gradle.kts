@@ -8,6 +8,9 @@ plugins {
     id("com.google.gms.google-services")
     // Parcelize
     id("kotlin-parcelize")
+    // Hilt
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 
 }
 
@@ -84,4 +87,16 @@ dependencies {
     //Glide
     val gli_ver = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$gli_ver")
+
+    // Hilt
+    val hilt_ver = "2.48"
+    implementation("com.google.dagger:hilt-android:$hilt_ver")
+    kapt("com.google.dagger:hilt-android-compiler:$hilt_ver")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

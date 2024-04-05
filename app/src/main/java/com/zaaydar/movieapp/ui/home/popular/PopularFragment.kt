@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaaydar.movieapp.databinding.FragmentPopularBinding
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.util.Constants.genreMap
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
 

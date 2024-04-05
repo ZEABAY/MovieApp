@@ -2,18 +2,22 @@ package com.zaaydar.movieapp.ui.home.popular
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zaaydar.movieapp.data.MovieApiService
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesDto
 import com.zaaydar.movieapp.model.PopularMoviesResponse
-import com.zaaydar.movieapp.service.MovieApiService
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class PopularViewModel : ViewModel() {
+@HiltViewModel
+class PopularViewModel @Inject constructor(
+    private val movieApiService: MovieApiService
+) : ViewModel() {
 
-    private val movieApiService = MovieApiService()
     private val disposable = CompositeDisposable()
 
     val popularMovies = MutableLiveData<List<PopularMoviesDto>>()
