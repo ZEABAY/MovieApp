@@ -23,14 +23,15 @@ class PopularViewModel @Inject constructor(
     val popularMovies = MutableLiveData<List<PopularMoviesDto>>()
     val movieGenres = MutableLiveData<MovieGenre>()
     val loading = MutableLiveData<Boolean>()
+    val loadingNext = MutableLiveData<Boolean>()
     val error = MutableLiveData<Boolean>()
-
+    private var page: Int = 1
 
     fun getPopularMoviesFromApi() {
-        loading.value = false
+        loading.value = true
 
         disposable.add(
-            movieApiService.getPopulars()
+            movieApiService.getPopulars(page.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
@@ -52,7 +53,7 @@ class PopularViewModel @Inject constructor(
                         error.value = false
                         loading.value = false
                         popularMovies.value = list
-
+                        page++
                     }
 
                     override fun onError(e: Throwable) {
@@ -65,6 +66,47 @@ class PopularViewModel @Inject constructor(
         )
 
     }
+
+    fun getNextPagePopularMoviesFromApi() {
+        loadingNext.value = true
+
+        disposable.add(
+            movieApiService.getPopulars(page.toString())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
+                    override fun onSuccess(t: PopularMoviesResponse) {
+                        val list = arrayListOf<PopularMoviesDto>()
+
+                        for (item in t.results) {
+
+                            val dto = PopularMoviesDto(
+                                item.id,
+                                item.title,
+                                item.genreIds,
+                                item.voteAverage,
+                                item.posterPath
+                            )
+
+                            list.add(dto)
+                        }
+                        error.value = false
+                        loadingNext.value = false
+                        popularMovies.value = list
+                        page++
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loadingNext.value = false
+                        error.value = true
+                        e.printStackTrace()
+                    }
+
+                })
+        )
+
+    }
+
 
     fun getGenresFromApi() {
         disposable.add(
@@ -87,4 +129,5 @@ class PopularViewModel @Inject constructor(
                 })
         )
     }
+
 }

@@ -37,13 +37,10 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*
-                // TODO skip login page
-                val intent = Intent(context, MainActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
 
-         */
+
+
+
         binding.btnSignUp.setOnClickListener {
             val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
             Navigation.findNavController(it).navigate(action)

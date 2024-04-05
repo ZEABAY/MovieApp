@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentPopularBinding
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.util.Constants.genreMap
@@ -35,6 +36,17 @@ class PopularFragment : Fragment() {
         binding.rvPopular.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = popularAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+
+                    if (!recyclerView.canScrollVertically(1)) {
+                        popularViewModel.getNextPagePopularMoviesFromApi()
+                    }
+                }
+            })
+
         }
 
         observeLiveData()
@@ -46,6 +58,7 @@ class PopularFragment : Fragment() {
                 binding.apply {
                     rvPopular.visibility = View.VISIBLE
                     pbLoading.visibility = View.GONE
+                    pbLoadingNext.visibility = View.GONE
                     popularAdapter.updatePopularList(populars)
                 }
             }
@@ -66,6 +79,20 @@ class PopularFragment : Fragment() {
                         tvError.visibility = View.GONE
                         rvPopular.visibility = View.GONE
                         pbLoading.visibility = View.VISIBLE
+                    } else {
+                        tvError.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
+        popularViewModel.loadingNext.observe(viewLifecycleOwner) { loadingNext ->
+            loadingNext?.let {
+                binding.apply {
+                    if (loadingNext) {
+                        tvError.visibility = View.GONE
+                        rvPopular.visibility = View.GONE
+                        pbLoadingNext.visibility = View.VISIBLE
                     } else {
                         tvError.visibility = View.GONE
                     }

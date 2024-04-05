@@ -16,6 +16,7 @@ interface MovieApiInterface {
 
     @GET(MOVIE + POPULAR)
     fun getPopularMovies(
+        @Query("page") page: String,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<PopularMoviesResponse>
 
@@ -24,6 +25,5 @@ interface MovieApiInterface {
         @Query("language") language: String = LANG_EN,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<MovieGenre>
-
 
 }

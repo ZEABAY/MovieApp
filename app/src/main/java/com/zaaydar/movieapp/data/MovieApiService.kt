@@ -8,9 +8,8 @@ import javax.inject.Inject
 class MovieApiService @Inject constructor(
     private val api: MovieApiInterface
 ) {
-
-    fun getPopulars(): Single<PopularMoviesResponse> {
-        return api.getPopularMovies()
+    fun getPopulars(page: String): Single<PopularMoviesResponse> {
+        return api.getPopularMovies(page)
     }
 
     fun getGenres(): Single<MovieGenre> {
