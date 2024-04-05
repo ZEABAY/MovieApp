@@ -64,13 +64,15 @@ class PopularAdapter(private var popularMovies: MutableList<PopularMoviesDto>) :
         holder.bind(popularMovies[position])
     }
 
-    fun updatePopularList(newPopularMoviesTemp: List<PopularMoviesDto>) {
-        val newPopularMovies = newPopularMoviesTemp.drop(1)
+    fun updatePopularList(newPopularMovies: List<PopularMoviesDto>) {
+        var updatedNewPopularMovies = newPopularMovies
+        if (popularMovies.size > 1) {
+            updatedNewPopularMovies = newPopularMovies.drop(1)
+        }
         val startPosition = popularMovies.size
-        popularMovies.addAll(newPopularMovies)
-        notifyItemRangeInserted(startPosition, newPopularMovies.size)
+        popularMovies.addAll(updatedNewPopularMovies)
+        notifyItemRangeInserted(startPosition, updatedNewPopularMovies.size)
     }
-
 
 
 }

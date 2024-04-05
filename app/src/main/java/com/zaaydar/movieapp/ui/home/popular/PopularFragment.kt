@@ -91,7 +91,7 @@ class PopularFragment : Fragment() {
                 binding.apply {
                     if (loadingNext) {
                         tvError.visibility = View.GONE
-                        rvPopular.visibility = View.GONE
+                        rvPopular.visibility = View.VISIBLE
                         pbLoadingNext.visibility = View.VISIBLE
                     } else {
                         tvError.visibility = View.GONE
