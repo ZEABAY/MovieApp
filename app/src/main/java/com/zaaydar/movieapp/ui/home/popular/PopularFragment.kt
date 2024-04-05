@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.zaaydar.movieapp.databinding.FragmentPopularBinding
+import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.util.Constants.genreMap
 
 class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
@@ -26,6 +28,7 @@ class PopularFragment : Fragment() {
 
         popularViewModel = ViewModelProvider(this)[PopularViewModel::class.java]
         popularViewModel.getPopularMoviesFromApi()
+        popularViewModel.getGenresFromApi()
 
         binding.rvPopular.apply {
             layoutManager = LinearLayoutManager(context)
@@ -64,6 +67,14 @@ class PopularFragment : Fragment() {
                     } else {
                         tvError.visibility = View.GONE
                     }
+                }
+            }
+        }
+
+        popularViewModel.movieGenres.observe(viewLifecycleOwner) { movieGenre ->
+            movieGenre?.let {
+                for (item: MovieGenre.Genre in movieGenre.genres) {
+                    genreMap[item.id] = item.name
                 }
             }
         }

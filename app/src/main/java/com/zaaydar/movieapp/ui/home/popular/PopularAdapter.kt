@@ -10,6 +10,7 @@ import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.PopularMoviesDto
 import com.zaaydar.movieapp.util.Constants.POSTER_BASE_URL
+import com.zaaydar.movieapp.util.Constants.genreMap
 
 class PopularAdapter(private var popularMovies: List<PopularMoviesDto>) :
     RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
@@ -17,12 +18,21 @@ class PopularAdapter(private var popularMovies: List<PopularMoviesDto>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PopularMoviesDto) {
+            println(genreMap.toString())
+
             with(binding) {
-                tvMovieName.text = item.title.toString()
-                tvMovieCategories.text = item.genreIds.toString()
+
+                tvMovieName.text = item.title
                 tvMoviePopularity.text = item.popularity.toString()
                 rbRate.rating = item.voteAverage.toFloat() / 2
 
+                val genres = mutableListOf<String>()
+                for ((id, genre) in genreMap) {
+                    if (item.genreIds.contains(id)) {
+                        genres.add(genre)
+                    }
+                }
+                tvMovieCategories.text = genres.joinToString(", ")
 
                 val placeholder = CircularProgressDrawable(binding.root.context).apply {
                     strokeWidth = 8f

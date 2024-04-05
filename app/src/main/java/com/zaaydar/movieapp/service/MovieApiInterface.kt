@@ -1,7 +1,11 @@
 package com.zaaydar.movieapp.service
 
+import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesResponse
 import com.zaaydar.movieapp.util.Constants.API_KEY
+import com.zaaydar.movieapp.util.Constants.GENRE
+import com.zaaydar.movieapp.util.Constants.LANG_EN
+import com.zaaydar.movieapp.util.Constants.LIST
 import com.zaaydar.movieapp.util.Constants.MOVIE
 import com.zaaydar.movieapp.util.Constants.POPULAR
 import io.reactivex.Single
@@ -14,6 +18,12 @@ interface MovieApiInterface {
     fun getPopularMovies(
         @Query("api_key") apiKey: String = API_KEY
     ): Single<PopularMoviesResponse>
+
+    @GET(GENRE + MOVIE + LIST)
+    fun getMovieGenres(
+        @Query("language") language: String = LANG_EN,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Single<MovieGenre>
 
 
 }

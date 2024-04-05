@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.ui.signin
+package com.zaaydar.movieapp.ui.login.signin
 
 import android.content.Intent
 import android.os.Bundle
@@ -39,10 +39,10 @@ class SignInFragment : Fragment() {
 
 
         // TODO skip login page
-        /*val intent = Intent(context, MainActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
-         */
+
         binding.btnSignUp.setOnClickListener {
             val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
             Navigation.findNavController(it).navigate(action)

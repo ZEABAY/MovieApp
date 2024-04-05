@@ -2,6 +2,7 @@ package com.zaaydar.movieapp.ui.home.popular
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesDto
 import com.zaaydar.movieapp.model.PopularMoviesResponse
 import com.zaaydar.movieapp.service.MovieApiService
@@ -16,6 +17,7 @@ class PopularViewModel : ViewModel() {
     private val disposable = CompositeDisposable()
 
     val popularMovies = MutableLiveData<List<PopularMoviesDto>>()
+    val movieGenres = MutableLiveData<MovieGenre>()
     val loading = MutableLiveData<Boolean>()
     val error = MutableLiveData<Boolean>()
 
@@ -59,5 +61,27 @@ class PopularViewModel : ViewModel() {
                 })
         )
 
+    }
+
+    fun getGenresFromApi() {
+        disposable.add(
+            movieApiService.getGenres()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<MovieGenre>() {
+                    override fun onSuccess(t: MovieGenre) {
+                        error.value = false
+                        loading.value = false
+                        movieGenres.value = t
+                    }
+
+                    override fun onError(e: Throwable) {
+                        loading.value = false
+                        error.value = true
+                        e.printStackTrace()
+                    }
+
+                })
+        )
     }
 }

@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.ui.signup
+package com.zaaydar.movieapp.ui.login.signup
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,5 +1,6 @@
 package com.zaaydar.movieapp.service
 
+import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesResponse
 import com.zaaydar.movieapp.util.Constants.BASE_URL
 import io.reactivex.Single
@@ -19,5 +20,9 @@ class MovieApiService {
 
     fun getPopulars(): Single<PopularMoviesResponse> {
         return api.getPopularMovies()
+    }
+
+    fun getGenres(): Single<MovieGenre> {
+        return api.getMovieGenres()
     }
 }
