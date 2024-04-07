@@ -17,8 +17,6 @@ class PopularAdapter(private var popularMovies: MutableList<PopularMoviesDto>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: PopularMoviesDto) {
-            println(genreMap.toString())
-
             with(binding) {
 
                 tvMovieName.text = item.title
@@ -66,7 +64,7 @@ class PopularAdapter(private var popularMovies: MutableList<PopularMoviesDto>) :
 
     fun updatePopularList(newPopularMovies: List<PopularMoviesDto>) {
         var updatedNewPopularMovies = newPopularMovies
-        if (popularMovies.size > 1) {
+        if (popularMovies.size > 1 && (popularMovies.last() == newPopularMovies.first())) {
             updatedNewPopularMovies = newPopularMovies.drop(1)
         }
         val startPosition = popularMovies.size
