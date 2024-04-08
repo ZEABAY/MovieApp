@@ -5,11 +5,11 @@ object Constants {
     ///genre/movie/list?api_key=e14ee303e1373d68f64459635c44e339&language=en-US
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/original/"
-    const val DISCOVER = "discover/"
     const val MOVIE = "movie/"
     const val POPULAR = "popular"
     const val NOW_PLAYING = "now_playing"
-    const val CHANGES = "changes/"
+    const val TOP_RATED = "top_rated"
+    const val UPCOMING = "upcoming"
     const val API_KEY = "e14ee303e1373d68f64459635c44e339"
     const val GENRE = "genre/"
     const val LIST = "list"

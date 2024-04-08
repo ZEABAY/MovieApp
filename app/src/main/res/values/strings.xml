@@ -18,7 +18,7 @@
     <string-array name="tabName">
         <item name="popular">Popular</item>
         <item name="now_playing">Now Playing</item>
-        <item name="upcoming">Upcoming</item>
+        <item name="top_rated">Top Rated</item>
         <item name="recommended">Recommended</item>
     </string-array>
 

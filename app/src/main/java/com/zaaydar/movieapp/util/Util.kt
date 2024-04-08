@@ -9,6 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
+import com.zaaydar.movieapp.model.toprated.TopRatedResponse
 
 
 fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
@@ -30,6 +31,24 @@ fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
 }
 
 fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
+    val list = arrayListOf<MoviesDto>()
+
+    for (item in results) {
+
+        val dto = MoviesDto(
+            item.id,
+            item.title,
+            item.genreIds,
+            item.voteAverage,
+            item.posterPath
+        )
+
+        list.add(dto)
+    }
+    return list
+}
+
+fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
 
     for (item in results) {

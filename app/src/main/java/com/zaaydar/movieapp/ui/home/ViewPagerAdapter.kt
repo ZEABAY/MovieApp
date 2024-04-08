@@ -7,7 +7,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.zaaydar.movieapp.ui.home.nowplaying.NowPlayingFragment
 import com.zaaydar.movieapp.ui.home.popular.PopularFragment
 import com.zaaydar.movieapp.ui.home.recommended.RecommendedFragment
-import com.zaaydar.movieapp.ui.home.upcoming.UpcomingFragment
+import com.zaaydar.movieapp.ui.home.toprated.TopRatedFragment
 
 class ViewPagerAdapter constructor(
     private val tabNames: Array<String>,
@@ -19,7 +19,7 @@ class ViewPagerAdapter constructor(
         return when (position) {
             0 -> PopularFragment()
             1 -> NowPlayingFragment()
-            2 -> UpcomingFragment()
+            2 -> TopRatedFragment()
             3 -> RecommendedFragment()
             else -> PopularFragment()
         }
