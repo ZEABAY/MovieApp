@@ -4,8 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MovieGenre
-import com.zaaydar.movieapp.model.PopularMoviesDto
-import com.zaaydar.movieapp.model.PopularMoviesResponse
+import com.zaaydar.movieapp.model.MoviesDto
+import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,15 +21,15 @@ class PopularViewModel @Inject constructor(
 
     private val disposable = CompositeDisposable()
 
-    val popularMovies = MutableLiveData<List<PopularMoviesDto>>()
+    val popularMovies = MutableLiveData<List<MoviesDto>>()
     val movieGenres = MutableLiveData<MovieGenre>()
-    val loading = MutableLiveData<Boolean>()
-    val loadingNext = MutableLiveData<Boolean>()
-    val error = MutableLiveData<Boolean>()
+    val popularLoading = MutableLiveData<Boolean>()
+    val popularLoadingNext = MutableLiveData<Boolean>()
+    val popularError = MutableLiveData<Boolean>()
     private var page: Int = 1
 
     fun getPopularMoviesFromApi() {
-        loading.value = true
+        popularLoading.value = true
 
         disposable.add(
             movieRepository.getPopulars(page.toString())
@@ -37,15 +37,15 @@ class PopularViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
                     override fun onSuccess(t: PopularMoviesResponse) {
-                        error.value = false
-                        loading.value = false
+                        popularError.value = false
+                        popularLoading.value = false
                         popularMovies.value = t.toMoviesDto()
                         page++
                     }
 
                     override fun onError(e: Throwable) {
-                        loading.value = false
-                        error.value = true
+                        popularLoading.value = false
+                        popularError.value = true
                         e.printStackTrace()
                     }
 
@@ -55,7 +55,7 @@ class PopularViewModel @Inject constructor(
     }
 
     fun getNextPagePopularMoviesFromApi() {
-        loadingNext.value = true
+        popularLoadingNext.value = true
 
         disposable.add(
             movieRepository.getPopulars(page.toString())
@@ -64,15 +64,15 @@ class PopularViewModel @Inject constructor(
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
                     override fun onSuccess(t: PopularMoviesResponse) {
 
-                        error.value = false
-                        loadingNext.value = false
+                        popularError.value = false
+                        popularLoadingNext.value = false
                         popularMovies.value = t.toMoviesDto()
                         page++
                     }
 
                     override fun onError(e: Throwable) {
-                        loadingNext.value = false
-                        error.value = true
+                        popularLoadingNext.value = false
+                        popularError.value = true
                         e.printStackTrace()
                     }
 
@@ -89,14 +89,14 @@ class PopularViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<MovieGenre>() {
                     override fun onSuccess(t: MovieGenre) {
-                        error.value = false
-                        loading.value = false
+                        popularError.value = false
+                        popularLoading.value = false
                         movieGenres.value = t
                     }
 
                     override fun onError(e: Throwable) {
-                        loading.value = false
-                        error.value = true
+                        popularLoading.value = false
+                        popularError.value = true
                         e.printStackTrace()
                     }
 

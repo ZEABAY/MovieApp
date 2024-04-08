@@ -8,6 +8,7 @@ object Constants {
     const val DISCOVER = "discover/"
     const val MOVIE = "movie/"
     const val POPULAR = "popular"
+    const val NOW_PLAYING = "now_playing"
     const val CHANGES = "changes/"
     const val API_KEY = "e14ee303e1373d68f64459635c44e339"
     const val GENRE = "genre/"

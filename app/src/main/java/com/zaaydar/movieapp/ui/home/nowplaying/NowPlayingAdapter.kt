@@ -1,16 +1,16 @@
-package com.zaaydar.movieapp.ui.home.popular
+package com.zaaydar.movieapp.ui.home.nowplaying
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.util.Constants.genreMap
+import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.imageInto
 
-class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
-    RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
-    class PopularViewHolder(private var binding: MoviesRowBinding) :
+class NowPlayingAdapter(private var nowPlayingMovies: MutableList<MoviesDto>) :
+    RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>() {
+    class NowPlayingViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MoviesDto) {
@@ -20,7 +20,7 @@ class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
                 rbRate.rating = item.voteAverage.toFloat() / 2
 
                 val genres = mutableListOf<String>()
-                for ((id, genre) in genreMap) {
+                for ((id, genre) in Constants.genreMap) {
                     if (item.genreIds.contains(id)) {
                         genres.add(genre)
                     }
@@ -34,8 +34,8 @@ class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularViewHolder {
-        return PopularViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingViewHolder {
+        return NowPlayingViewHolder(
             MoviesRowBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -43,19 +43,18 @@ class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
     }
 
     override fun getItemCount(): Int {
-        return popularMovies.size
+        return nowPlayingMovies.size
     }
 
-    override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
-        holder.bind(popularMovies[position])
+    override fun onBindViewHolder(holder: NowPlayingViewHolder, position: Int) {
+        holder.bind(nowPlayingMovies[position])
     }
 
-    fun updatePopularList(newPopularMovies: List<MoviesDto>) {
-        val startPosition = popularMovies.size
-        val filteredNewMovies = newPopularMovies.filter { !popularMovies.contains(it) }
-        popularMovies.addAll(filteredNewMovies)
+    fun updateNowPlayingMoviesList(newNowPlayingMovies: List<MoviesDto>) {
+        val startPosition = nowPlayingMovies.size
+        val filteredNewMovies = newNowPlayingMovies.filter { !nowPlayingMovies.contains(it) }
+        nowPlayingMovies.addAll(filteredNewMovies)
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
     }
-
 
 }

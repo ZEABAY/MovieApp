@@ -2,7 +2,7 @@ package com.zaaydar.movieapp.model
 
 import com.google.gson.annotations.SerializedName
 
-data class PopularMoviesDto(
+data class MoviesDto(
     @SerializedName("id")
     val id: Int,
     @SerializedName("title")

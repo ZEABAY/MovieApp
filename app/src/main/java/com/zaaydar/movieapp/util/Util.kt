@@ -6,16 +6,17 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
-import com.zaaydar.movieapp.model.PopularMoviesDto
-import com.zaaydar.movieapp.model.PopularMoviesResponse
+import com.zaaydar.movieapp.model.MoviesDto
+import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
+import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 
 
-fun PopularMoviesResponse.toMoviesDto(): List<PopularMoviesDto> {
-    val list = arrayListOf<PopularMoviesDto>()
+fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
+    val list = arrayListOf<MoviesDto>()
 
     for (item in results) {
 
-        val dto = PopularMoviesDto(
+        val dto = MoviesDto(
             item.id,
             item.title,
             item.genreIds,
@@ -27,6 +28,25 @@ fun PopularMoviesResponse.toMoviesDto(): List<PopularMoviesDto> {
     }
     return list
 }
+
+fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
+    val list = arrayListOf<MoviesDto>()
+
+    for (item in results) {
+
+        val dto = MoviesDto(
+            item.id,
+            item.title,
+            item.genreIds,
+            item.voteAverage,
+            item.posterPath
+        )
+
+        list.add(dto)
+    }
+    return list
+}
+
 
 fun Context.imageInto(url: String, into: ImageView) {
     val placeholder = CircularProgressDrawable(this).apply {

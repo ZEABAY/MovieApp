@@ -1,6 +1,7 @@
 package com.zaaydar.movieapp.di
 
 import com.zaaydar.movieapp.data.remote.MovieApiInterface
+import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -26,5 +27,10 @@ object AppModule {
             .create(MovieApiInterface::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideMovieRepository(apiInterface: MovieApiInterface): MovieRepository {
+        return MovieRepository(apiInterface)
+    }
 
 }

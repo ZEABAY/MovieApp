@@ -53,48 +53,48 @@ class PopularFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        popularViewModel.popularMovies.observe(viewLifecycleOwner) { populars ->
-            populars?.let {
+        popularViewModel.popularMovies.observe(viewLifecycleOwner) { movies ->
+            movies?.let {
                 binding.apply {
                     rvPopular.visibility = View.VISIBLE
-                    pbLoading.visibility = View.GONE
-                    pbLoadingNext.visibility = View.GONE
-                    popularAdapter.updatePopularList(populars)
+                    pbPopularLoading.visibility = View.GONE
+                    pbPopularLoadingNext.visibility = View.GONE
+                    popularAdapter.updatePopularList(movies)
                 }
             }
         }
 
-        popularViewModel.error.observe(viewLifecycleOwner) { error ->
+        popularViewModel.popularError.observe(viewLifecycleOwner) { error ->
             error?.let {
                 binding.apply {
-                    tvError.visibility = if (error) View.VISIBLE else View.GONE
+                    tvPopularError.visibility = if (error) View.VISIBLE else View.GONE
                 }
             }
         }
 
-        popularViewModel.loading.observe(viewLifecycleOwner) { loading ->
+        popularViewModel.popularLoading.observe(viewLifecycleOwner) { loading ->
             loading?.let {
                 binding.apply {
                     if (loading) {
-                        tvError.visibility = View.GONE
+                        tvPopularError.visibility = View.GONE
                         rvPopular.visibility = View.GONE
-                        pbLoading.visibility = View.VISIBLE
+                        pbPopularLoading.visibility = View.VISIBLE
                     } else {
-                        tvError.visibility = View.GONE
+                        tvPopularError.visibility = View.GONE
                     }
                 }
             }
         }
 
-        popularViewModel.loadingNext.observe(viewLifecycleOwner) { loadingNext ->
+        popularViewModel.popularLoadingNext.observe(viewLifecycleOwner) { loadingNext ->
             loadingNext?.let {
                 binding.apply {
                     if (loadingNext) {
-                        tvError.visibility = View.GONE
+                        tvPopularError.visibility = View.GONE
                         rvPopular.visibility = View.VISIBLE
-                        pbLoadingNext.visibility = View.VISIBLE
+                        pbPopularLoadingNext.visibility = View.VISIBLE
                     } else {
-                        tvError.visibility = View.GONE
+                        tvPopularError.visibility = View.GONE
                     }
                 }
             }
@@ -107,6 +107,11 @@ class PopularFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.rvPopular.adapter = null
     }
 
 }
