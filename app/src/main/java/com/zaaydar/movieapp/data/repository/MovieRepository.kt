@@ -5,6 +5,7 @@ import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
+import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -21,6 +22,10 @@ class MovieRepository @Inject constructor(
 
     fun getTopRated(page: String): Single<TopRatedResponse> {
         return api.getTopRatedMovies(page)
+    }
+
+    fun getUpcoming(page: String): Single<UpcomingResponse> {
+        return api.getUpcomingMovies(page)
     }
 
     fun getGenres(): Single<MovieGenre> {

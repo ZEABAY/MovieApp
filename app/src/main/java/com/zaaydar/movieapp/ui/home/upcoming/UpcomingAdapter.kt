@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.ui.home.toprated
+package com.zaaydar.movieapp.ui.home.upcoming
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,9 +8,9 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.imageInto
 
-class TopRatedAdapter(private var topRatedMovies: MutableList<MoviesDto>) :
-    RecyclerView.Adapter<TopRatedAdapter.TopRatedViewHolder>() {
-    class TopRatedViewHolder(private var binding: MoviesRowBinding) :
+class UpcomingAdapter(private var upcomingMovies: MutableList<MoviesDto>) :
+    RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+    class UpcomingViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MoviesDto) {
@@ -34,8 +34,8 @@ class TopRatedAdapter(private var topRatedMovies: MutableList<MoviesDto>) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopRatedViewHolder {
-        return TopRatedViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingViewHolder {
+        return UpcomingViewHolder(
             MoviesRowBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -43,17 +43,17 @@ class TopRatedAdapter(private var topRatedMovies: MutableList<MoviesDto>) :
     }
 
     override fun getItemCount(): Int {
-        return topRatedMovies.size
+        return upcomingMovies.size
     }
 
-    override fun onBindViewHolder(holder: TopRatedViewHolder, position: Int) {
-        holder.bind(topRatedMovies[position])
+    override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
+        holder.bind(upcomingMovies[position])
     }
 
-    fun updateTopRatedMoviesList(newTopRatedMovies: List<MoviesDto>) {
-        val startPosition = topRatedMovies.size
-        val filteredNewMovies = newTopRatedMovies.filter { !topRatedMovies.contains(it) }
-        topRatedMovies.addAll(filteredNewMovies)
+    fun updateUpcomingMoviesList(newUpcomingMovies: List<MoviesDto>) {
+        val startPosition = upcomingMovies.size
+        val filteredNewMovies = newUpcomingMovies.filter { !upcomingMovies.contains(it) }
+        upcomingMovies.addAll(filteredNewMovies)
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
     }
 

@@ -10,6 +10,7 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
+import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
 
 
 fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
@@ -49,6 +50,24 @@ fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
 }
 
 fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
+    val list = arrayListOf<MoviesDto>()
+
+    for (item in results) {
+
+        val dto = MoviesDto(
+            item.id,
+            item.title,
+            item.genreIds,
+            item.voteAverage,
+            item.posterPath
+        )
+
+        list.add(dto)
+    }
+    return list
+}
+
+fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
 
     for (item in results) {

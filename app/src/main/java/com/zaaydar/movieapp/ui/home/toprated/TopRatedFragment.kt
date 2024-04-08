@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zaaydar.movieapp.databinding.FragmentNowPlayingBinding
+import com.zaaydar.movieapp.databinding.FragmentTopRatedBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TopRatedFragment : Fragment() {
 
-    private lateinit var binding: FragmentNowPlayingBinding
+    private lateinit var binding: FragmentTopRatedBinding
 
     private lateinit var topRatedViewModel: TopRatedViewModel
     private var topRatedAdapter = TopRatedAdapter(arrayListOf())
@@ -23,7 +23,7 @@ class TopRatedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentNowPlayingBinding.inflate(layoutInflater, container, false)
+        binding = FragmentTopRatedBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -33,7 +33,7 @@ class TopRatedFragment : Fragment() {
         topRatedViewModel = ViewModelProvider(this)[TopRatedViewModel::class.java]
         topRatedViewModel.getTopRatedMoviesFromApi()
 
-        binding.rvNowPlaying.apply {
+        binding.rvTopRated.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = topRatedAdapter
 
@@ -56,10 +56,10 @@ class TopRatedFragment : Fragment() {
         topRatedViewModel.topRatedMovies.observe(viewLifecycleOwner) { topRated ->
             topRated?.let {
                 binding.apply {
-                    rvNowPlaying.visibility = View.VISIBLE
-                    pbNowPlayingLoading.visibility = View.GONE
-                    pbNowPlayingLoadingNext.visibility = View.GONE
-                    topRatedAdapter.updateNowPlayingMoviesList(topRated)
+                    rvTopRated.visibility = View.VISIBLE
+                    pbTopRatedLoading.visibility = View.GONE
+                    pbTopRatedLoadingNext.visibility = View.GONE
+                    topRatedAdapter.updateTopRatedMoviesList(topRated)
                 }
             }
         }
@@ -67,7 +67,7 @@ class TopRatedFragment : Fragment() {
         topRatedViewModel.topRatedError.observe(viewLifecycleOwner) { error ->
             error?.let {
                 binding.apply {
-                    tvNowPlayingError.visibility = if (error) View.VISIBLE else View.GONE
+                    tvTopRatedError.visibility = if (error) View.VISIBLE else View.GONE
                 }
             }
         }
@@ -76,11 +76,11 @@ class TopRatedFragment : Fragment() {
             loading?.let {
                 binding.apply {
                     if (loading) {
-                        tvNowPlayingError.visibility = View.GONE
-                        rvNowPlaying.visibility = View.GONE
-                        pbNowPlayingLoading.visibility = View.VISIBLE
+                        tvTopRatedError.visibility = View.GONE
+                        rvTopRated.visibility = View.GONE
+                        pbTopRatedLoading.visibility = View.VISIBLE
                     } else {
-                        tvNowPlayingError.visibility = View.GONE
+                        tvTopRatedError.visibility = View.GONE
                     }
                 }
             }
@@ -90,11 +90,11 @@ class TopRatedFragment : Fragment() {
             loadingNext?.let {
                 binding.apply {
                     if (loadingNext) {
-                        tvNowPlayingError.visibility = View.GONE
-                        rvNowPlaying.visibility = View.VISIBLE
-                        pbNowPlayingLoadingNext.visibility = View.VISIBLE
+                        tvTopRatedError.visibility = View.GONE
+                        rvTopRated.visibility = View.VISIBLE
+                        pbTopRatedLoadingNext.visibility = View.VISIBLE
                     } else {
-                        tvNowPlayingError.visibility = View.GONE
+                        tvTopRatedError.visibility = View.GONE
                     }
                 }
             }
@@ -103,7 +103,7 @@ class TopRatedFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvNowPlaying.adapter = null
+        binding.rvTopRated.adapter = null
     }
 
 }

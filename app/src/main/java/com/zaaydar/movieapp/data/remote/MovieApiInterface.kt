@@ -4,6 +4,7 @@ import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
+import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
 import com.zaaydar.movieapp.util.Constants.API_KEY
 import com.zaaydar.movieapp.util.Constants.GENRE
 import com.zaaydar.movieapp.util.Constants.LANG_EN
@@ -12,6 +13,7 @@ import com.zaaydar.movieapp.util.Constants.MOVIE
 import com.zaaydar.movieapp.util.Constants.NOW_PLAYING
 import com.zaaydar.movieapp.util.Constants.POPULAR
 import com.zaaydar.movieapp.util.Constants.TOP_RATED
+import com.zaaydar.movieapp.util.Constants.UPCOMING
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -36,6 +38,12 @@ interface MovieApiInterface {
         @Query("page") page: String,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<TopRatedResponse>
+
+    @GET(MOVIE + UPCOMING)
+    fun getUpcomingMovies(
+        @Query("page") page: String,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Single<UpcomingResponse>
 
     @GET(GENRE + MOVIE + LIST)
     fun getMovieGenres(

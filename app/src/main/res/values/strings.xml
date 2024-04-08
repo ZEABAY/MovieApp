@@ -19,7 +19,7 @@
         <item name="popular">Popular</item>
         <item name="now_playing">Now Playing</item>
         <item name="top_rated">Top Rated</item>
-        <item name="recommended">Recommended</item>
+        <item name="upcoming">Upcoming</item>
     </string-array>
 
     <string name="genre_list_placeholder">%s</string>
