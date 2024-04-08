@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.data
+package com.zaaydar.movieapp.data.remote
 
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesResponse

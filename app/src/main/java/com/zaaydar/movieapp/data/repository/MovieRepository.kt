@@ -1,11 +1,12 @@
-package com.zaaydar.movieapp.data
+package com.zaaydar.movieapp.data.repository
 
+import com.zaaydar.movieapp.data.remote.MovieApiInterface
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesResponse
 import io.reactivex.Single
 import javax.inject.Inject
 
-class MovieApiService @Inject constructor(
+class MovieRepository @Inject constructor(
     private val api: MovieApiInterface
 ) {
     fun getPopulars(page: String): Single<PopularMoviesResponse> {

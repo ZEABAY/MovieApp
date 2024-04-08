@@ -1,6 +1,6 @@
 package com.zaaydar.movieapp.di
 
-import com.zaaydar.movieapp.data.MovieApiInterface
+import com.zaaydar.movieapp.data.remote.MovieApiInterface
 import com.zaaydar.movieapp.util.Constants
 import dagger.Module
 import dagger.Provides

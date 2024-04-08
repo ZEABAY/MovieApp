@@ -38,7 +38,9 @@ class SignInFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
 
 
         binding.btnSignUp.setOnClickListener {

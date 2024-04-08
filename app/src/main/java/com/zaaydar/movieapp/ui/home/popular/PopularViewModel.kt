@@ -2,10 +2,11 @@ package com.zaaydar.movieapp.ui.home.popular
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.zaaydar.movieapp.data.MovieApiService
+import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.PopularMoviesDto
 import com.zaaydar.movieapp.model.PopularMoviesResponse
+import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PopularViewModel @Inject constructor(
-    private val movieApiService: MovieApiService
+    private val movieRepository: MovieRepository
 ) : ViewModel() {
 
     private val disposable = CompositeDisposable()
@@ -31,28 +32,14 @@ class PopularViewModel @Inject constructor(
         loading.value = true
 
         disposable.add(
-            movieApiService.getPopulars(page.toString())
+            movieRepository.getPopulars(page.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
                     override fun onSuccess(t: PopularMoviesResponse) {
-                        val list = arrayListOf<PopularMoviesDto>()
-
-                        for (item in t.results) {
-
-                            val dto = PopularMoviesDto(
-                                item.id,
-                                item.title,
-                                item.genreIds,
-                                item.voteAverage,
-                                item.posterPath
-                            )
-
-                            list.add(dto)
-                        }
                         error.value = false
                         loading.value = false
-                        popularMovies.value = list
+                        popularMovies.value = t.toMoviesDto()
                         page++
                     }
 
@@ -71,28 +58,15 @@ class PopularViewModel @Inject constructor(
         loadingNext.value = true
 
         disposable.add(
-            movieApiService.getPopulars(page.toString())
+            movieRepository.getPopulars(page.toString())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
                     override fun onSuccess(t: PopularMoviesResponse) {
-                        val list = arrayListOf<PopularMoviesDto>()
 
-                        for (item in t.results) {
-
-                            val dto = PopularMoviesDto(
-                                item.id,
-                                item.title,
-                                item.genreIds,
-                                item.voteAverage,
-                                item.posterPath
-                            )
-
-                            list.add(dto)
-                        }
                         error.value = false
                         loadingNext.value = false
-                        popularMovies.value = list
+                        popularMovies.value = t.toMoviesDto()
                         page++
                     }
 
@@ -110,7 +84,7 @@ class PopularViewModel @Inject constructor(
 
     fun getGenresFromApi() {
         disposable.add(
-            movieApiService.getGenres()
+            movieRepository.getGenres()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<MovieGenre>() {
