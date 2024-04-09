@@ -10,11 +10,14 @@ object Constants {
     const val NOW_PLAYING = "now_playing"
     const val TOP_RATED = "top_rated"
     const val UPCOMING = "upcoming"
+    const val DISCOVER_MOVIE = "discover/movie"
     const val API_KEY = "e14ee303e1373d68f64459635c44e339"
     const val GENRE = "genre/"
     const val LIST = "list"
     const val LANG_EN = "en-US"
     const val LANG_TR = "tr-TR"
+
+    // discover/movie
 
     val genreMap = mutableMapOf<Int, String>()
 }

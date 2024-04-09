@@ -2,6 +2,7 @@ package com.zaaydar.movieapp.data.repository
 
 import com.zaaydar.movieapp.data.remote.MovieApiInterface
 import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
@@ -26,6 +27,10 @@ class MovieRepository @Inject constructor(
 
     fun getUpcoming(page: String): Single<UpcomingResponse> {
         return api.getUpcomingMovies(page)
+    }
+
+    fun getMoviesByCategory(genre: Int, page: String): Single<CategoryResponse> {
+        return api.getMoviesByCategory(genre, page)
     }
 
     fun getGenres(): Single<MovieGenre> {

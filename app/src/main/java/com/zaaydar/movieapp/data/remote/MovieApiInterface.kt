@@ -1,11 +1,13 @@
 package com.zaaydar.movieapp.data.remote
 
 import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
 import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
 import com.zaaydar.movieapp.util.Constants.API_KEY
+import com.zaaydar.movieapp.util.Constants.DISCOVER_MOVIE
 import com.zaaydar.movieapp.util.Constants.GENRE
 import com.zaaydar.movieapp.util.Constants.LANG_EN
 import com.zaaydar.movieapp.util.Constants.LIST
@@ -44,6 +46,13 @@ interface MovieApiInterface {
         @Query("page") page: String,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<UpcomingResponse>
+
+    @GET(DISCOVER_MOVIE)
+    fun getMoviesByCategory(
+        @Query("with_genres") genre: Int,
+        @Query("page") page: String,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Single<CategoryResponse>
 
     @GET(GENRE + MOVIE + LIST)
     fun getMovieGenres(
