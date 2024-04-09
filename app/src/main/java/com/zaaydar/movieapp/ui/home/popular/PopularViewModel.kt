@@ -32,7 +32,7 @@ class PopularViewModel @Inject constructor(
         popularLoading.value = true
 
         disposable.add(
-            movieRepository.getPopulars(page.toString())
+            movieRepository.getPopulars(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
@@ -58,7 +58,7 @@ class PopularViewModel @Inject constructor(
         popularLoadingNext.value = true
 
         disposable.add(
-            movieRepository.getPopulars(page.toString())
+            movieRepository.getPopulars(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {

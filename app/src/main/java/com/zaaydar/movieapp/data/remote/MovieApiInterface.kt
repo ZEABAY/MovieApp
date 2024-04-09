@@ -24,33 +24,33 @@ interface MovieApiInterface {
 
     @GET(MOVIE + POPULAR)
     fun getPopularMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<PopularMoviesResponse>
 
 
     @GET(MOVIE + NOW_PLAYING)
     fun getNowPlayingsMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<NowPlayingResponse>
 
     @GET(MOVIE + TOP_RATED)
     fun getTopRatedMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<TopRatedResponse>
 
     @GET(MOVIE + UPCOMING)
     fun getUpcomingMovies(
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<UpcomingResponse>
 
     @GET(DISCOVER_MOVIE)
     fun getMoviesByCategory(
         @Query("with_genres") genre: Int,
-        @Query("page") page: String,
+        @Query("page") page: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<CategoryResponse>
 

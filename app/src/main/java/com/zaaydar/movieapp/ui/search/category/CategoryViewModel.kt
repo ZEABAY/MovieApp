@@ -29,7 +29,7 @@ class CategoryViewModel @Inject constructor(
     fun getMoviesByCategoryFromApi(genre: Int) {
         categoryLoading.value = true
         disposable.add(
-            movieRepository.getMoviesByCategory(genre, page.toString())
+            movieRepository.getMoviesByCategory(genre, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<CategoryResponse>() {
@@ -55,7 +55,7 @@ class CategoryViewModel @Inject constructor(
         categoryLoadingNext.value = true
 
         disposable.add(
-            movieRepository.getMoviesByCategory(genre, page.toString())
+            movieRepository.getMoviesByCategory(genre, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<CategoryResponse>() {

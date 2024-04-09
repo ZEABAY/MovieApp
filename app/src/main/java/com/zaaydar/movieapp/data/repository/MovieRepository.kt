@@ -13,23 +13,23 @@ import javax.inject.Inject
 class MovieRepository @Inject constructor(
     private val api: MovieApiInterface
 ) {
-    fun getPopulars(page: String): Single<PopularMoviesResponse> {
+    fun getPopulars(page: Int): Single<PopularMoviesResponse> {
         return api.getPopularMovies(page)
     }
 
-    fun getNowPlayings(page: String): Single<NowPlayingResponse> {
+    fun getNowPlayings(page: Int): Single<NowPlayingResponse> {
         return api.getNowPlayingsMovies(page)
     }
 
-    fun getTopRated(page: String): Single<TopRatedResponse> {
+    fun getTopRated(page: Int): Single<TopRatedResponse> {
         return api.getTopRatedMovies(page)
     }
 
-    fun getUpcoming(page: String): Single<UpcomingResponse> {
+    fun getUpcoming(page: Int): Single<UpcomingResponse> {
         return api.getUpcomingMovies(page)
     }
 
-    fun getMoviesByCategory(genre: Int, page: String): Single<CategoryResponse> {
+    fun getMoviesByCategory(genre: Int, page: Int): Single<CategoryResponse> {
         return api.getMoviesByCategory(genre, page)
     }
 

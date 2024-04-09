@@ -32,7 +32,7 @@ class UpcomingViewModel @Inject constructor(
         upcomingLoading.value = true
 
         disposable.add(
-            movieRepository.getUpcoming(upcomingPage.toString()).subscribeOn(Schedulers.io())
+            movieRepository.getUpcoming(upcomingPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<UpcomingResponse>() {
                     override fun onSuccess(t: UpcomingResponse) {
@@ -57,7 +57,7 @@ class UpcomingViewModel @Inject constructor(
         upcomingLoading.value = true
 
         disposable.add(
-            movieRepository.getUpcoming(upcomingPage.toString())
+            movieRepository.getUpcoming(upcomingPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<UpcomingResponse>() {

@@ -31,7 +31,7 @@ class NowPlayingViewModel @Inject constructor(
         nowPlayingLoading.value = true
 
         disposable.add(
-            movieRepository.getNowPlayings(nowPlayingPage.toString()).subscribeOn(Schedulers.io())
+            movieRepository.getNowPlayings(nowPlayingPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NowPlayingResponse>() {
                     override fun onSuccess(t: NowPlayingResponse) {
@@ -56,7 +56,7 @@ class NowPlayingViewModel @Inject constructor(
         nowPlayingLoadingNext.value = true
 
         disposable.add(
-            movieRepository.getNowPlayings(nowPlayingPage.toString())
+            movieRepository.getNowPlayings(nowPlayingPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NowPlayingResponse>() {

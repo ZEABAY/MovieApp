@@ -31,7 +31,7 @@ class TopRatedViewModel @Inject constructor(
         topRatedLoading.value = true
 
         disposable.add(
-            movieRepository.getTopRated(topRatedPage.toString()).subscribeOn(Schedulers.io())
+            movieRepository.getTopRated(topRatedPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<TopRatedResponse>() {
                     override fun onSuccess(t: TopRatedResponse) {
@@ -56,7 +56,7 @@ class TopRatedViewModel @Inject constructor(
         topRatedLoading.value = true
 
         disposable.add(
-            movieRepository.getTopRated(topRatedPage.toString())
+            movieRepository.getTopRated(topRatedPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<TopRatedResponse>() {
