@@ -1,18 +1,16 @@
 package com.zaaydar.movieapp.ui.search
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.CategoriesRowBinding
-import com.zaaydar.movieapp.ui.search.category.CategoryFragment
 import com.zaaydar.movieapp.util.Constants
 
-class CategoriesAdapter(private val fragmentManager: FragmentManager) : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
+class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
     private var genreMap = Constants.genreMap
+    var itemClick: (Int) -> Unit = {}
+
 
     class CategoriesViewHolder(private var binding: CategoriesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,14 +46,9 @@ class CategoriesAdapter(private val fragmentManager: FragmentManager) : Recycler
             )
 
         }
+
         holder.itemView.setOnClickListener {
-            //println(position.toString() + " " + genre + " " + genreMap[genre])
-            val fragment = CategoryFragment()
-            val bundle = Bundle()
-            bundle.putInt("genre", genre)
-            fragment.arguments = bundle
-            fragmentManager.beginTransaction().add(R.id.fragment_container, fragment)
-                .addToBackStack(null).commit()
+            itemClick(genre)
         }
     }
 

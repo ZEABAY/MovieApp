@@ -8,8 +8,11 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants.genreMap
 import com.zaaydar.movieapp.util.imageInto
 
-class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
-    RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+
+    private var popularMovies: MutableList<MoviesDto> = arrayListOf()
+    var itemClick: (Int) -> Unit = {}
+
     class PopularViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -29,7 +32,6 @@ class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
 
                 binding.root.context.imageInto(item.posterPath, iwMovie)
 
-
             }
         }
     }
@@ -48,6 +50,12 @@ class PopularAdapter(private var popularMovies: MutableList<MoviesDto>) :
 
     override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
         holder.bind(popularMovies[position])
+
+        holder.itemView.setOnClickListener {
+            itemClick(popularMovies[position].id)
+        }
+
+
     }
 
     fun updatePopularList(newPopularMovies: List<MoviesDto>) {

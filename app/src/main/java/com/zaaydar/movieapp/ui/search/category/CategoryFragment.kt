@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentCategoryBinding
@@ -18,7 +19,8 @@ class CategoryFragment : Fragment() {
     private lateinit var binding: FragmentCategoryBinding
 
     private lateinit var categoryViewModel: CategoryViewModel
-    private var categoryAdapter = CategoryAdapter(arrayListOf())
+    private val categoryAdapter by lazy { CategoryAdapter() }
+    private var genre: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,25 +34,38 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val genre = arguments?.getInt("genre")
+
+        arguments?.let {
+            genre = CategoryFragmentArgs.fromBundle(it).genre
+        }
+
         if (genre != null) {
             categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
-            categoryViewModel.getMoviesByCategoryFromApi(genre)
+            categoryViewModel.getMoviesByCategoryFromApi(genre!!)
         } else {
-            // Eğer genre null ise, hata durumunu yönetebilirsiniz
             Log.e("SearchFragment", "Genre argument is null")
         }
 
+        binding.ivBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         binding.rvCategory.apply {
+
             layoutManager = LinearLayoutManager(context)
             adapter = categoryAdapter
+
+            categoryAdapter.itemClick = {
+                val action = CategoryFragmentDirections.actionCategoryFragment2ToDetailFragment(it)
+                findNavController().navigate(action)
+            }
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)
 
                     if (!recyclerView.canScrollVertically(1) && genre != null) {
-                        categoryViewModel.getNextPageCategoryFromApi(genre)
+                        categoryViewModel.getNextPageCategoryFromApi(genre!!)
                     }
                 }
             })

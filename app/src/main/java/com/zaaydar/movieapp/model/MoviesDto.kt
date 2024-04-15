@@ -13,5 +13,4 @@ data class MoviesDto(
     val voteAverage: Double,
     @SerializedName("poster_path")
     val posterPath: String,
-
     )

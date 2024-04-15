@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentUpcomingBinding
+import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +19,9 @@ class UpcomingFragment : Fragment() {
     private lateinit var binding: FragmentUpcomingBinding
 
     private lateinit var upcomingViewModel: UpcomingViewModel
-    private var upcomingAdapter = UpcomingAdapter(arrayListOf())
+
+    private val upcomingAdapter by lazy { UpcomingAdapter() }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,11 @@ class UpcomingFragment : Fragment() {
         binding.rvUpcoming.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = upcomingAdapter
+
+            upcomingAdapter.itemClick = {
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+                findNavController().navigate(action)
+            }
 
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {

@@ -1,6 +1,7 @@
 package com.zaaydar.movieapp.ui.main
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -29,6 +30,18 @@ class MainActivity : AppCompatActivity() {
             NavigationUI.setupWithNavController(
                 bottomNavigationView2, navController
             )
+
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+                when (destination.id) {
+
+                    R.id.detailFragment -> {
+                        bottomNavigationView2.visibility = View.GONE
+                    }
+                    else -> {
+                        bottomNavigationView2.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
     }

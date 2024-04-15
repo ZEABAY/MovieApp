@@ -8,8 +8,11 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.imageInto
 
-class UpcomingAdapter(private var upcomingMovies: MutableList<MoviesDto>) :
-    RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+
+    private var upcomingMovies: MutableList<MoviesDto> = arrayListOf()
+    var itemClick: (Int) -> Unit = {}
+
     class UpcomingViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -48,6 +51,10 @@ class UpcomingAdapter(private var upcomingMovies: MutableList<MoviesDto>) :
 
     override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
         holder.bind(upcomingMovies[position])
+
+        holder.itemView.setOnClickListener {
+            itemClick(upcomingMovies[position].id)
+        }
     }
 
     fun updateUpcomingMoviesList(newUpcomingMovies: List<MoviesDto>) {

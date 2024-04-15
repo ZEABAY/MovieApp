@@ -2,7 +2,6 @@ package com.zaaydar.movieapp.util
 
 object Constants {
 
-    ///genre/movie/list?api_key=e14ee303e1373d68f64459635c44e339&language=en-US
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/original/"
     const val MOVIE = "movie/"
@@ -17,7 +16,6 @@ object Constants {
     const val LANG_EN = "en-US"
     const val LANG_TR = "tr-TR"
 
-    // discover/movie
 
     val genreMap = mutableMapOf<Int, String>()
 }

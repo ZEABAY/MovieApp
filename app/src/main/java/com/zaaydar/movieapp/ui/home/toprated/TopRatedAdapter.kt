@@ -8,8 +8,11 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.imageInto
 
-class TopRatedAdapter(private var topRatedMovies: MutableList<MoviesDto>) :
-    RecyclerView.Adapter<TopRatedAdapter.TopRatedViewHolder>() {
+class TopRatedAdapter : RecyclerView.Adapter<TopRatedAdapter.TopRatedViewHolder>() {
+
+    private var topRatedMovies: MutableList<MoviesDto> = arrayListOf()
+    var itemClick: (Int) -> Unit = {}
+
     class TopRatedViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -48,6 +51,10 @@ class TopRatedAdapter(private var topRatedMovies: MutableList<MoviesDto>) :
 
     override fun onBindViewHolder(holder: TopRatedViewHolder, position: Int) {
         holder.bind(topRatedMovies[position])
+
+        holder.itemView.setOnClickListener {
+            itemClick(topRatedMovies[position].id)
+        }
     }
 
     fun updateTopRatedMoviesList(newTopRatedMovies: List<MoviesDto>) {

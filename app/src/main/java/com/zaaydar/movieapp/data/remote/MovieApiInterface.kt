@@ -2,6 +2,7 @@ package com.zaaydar.movieapp.data.remote
 
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.category.CategoryResponse
+import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
@@ -18,6 +19,7 @@ import com.zaaydar.movieapp.util.Constants.TOP_RATED
 import com.zaaydar.movieapp.util.Constants.UPCOMING
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApiInterface {
@@ -60,4 +62,9 @@ interface MovieApiInterface {
         @Query("api_key") apiKey: String = API_KEY
     ): Single<MovieGenre>
 
+    @GET("$MOVIE{movie_id}")
+    fun getMovieById(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Single<MovieDetailResponse>
 }

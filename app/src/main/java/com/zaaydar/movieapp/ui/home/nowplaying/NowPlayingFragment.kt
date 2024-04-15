@@ -6,9 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentNowPlayingBinding
+import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +19,8 @@ class NowPlayingFragment : Fragment() {
     private lateinit var binding: FragmentNowPlayingBinding
 
     private lateinit var nowPlayingViewModel: NowPlayingViewModel
-    private var nowPlayingAdapter = NowPlayingAdapter(arrayListOf())
+
+    private val nowPlayingAdapter by lazy { NowPlayingAdapter() }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +40,11 @@ class NowPlayingFragment : Fragment() {
             layoutManager = LinearLayoutManager(context)
             adapter = nowPlayingAdapter
 
+
+            nowPlayingAdapter.itemClick = {
+                val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
+                findNavController().navigate(action)
+            }
             addOnScrollListener(object : RecyclerView.OnScrollListener() {
                 override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                     super.onScrollStateChanged(recyclerView, newState)

@@ -6,8 +6,10 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
+import com.zaaydar.movieapp.model.MovieDetailDto
 import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.model.category.CategoryResponse
+import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
@@ -102,6 +104,29 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
         list.add(dto)
     }
     return list
+}
+
+
+fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
+    val genres = arrayListOf<String>()
+    for (item in this.genres) {
+        genres.add(item.name)
+    }
+
+    return MovieDetailDto(
+        genres,
+        id,
+        overview,
+        posterPath,
+        releaseDate,
+        runtime,
+        spokenLanguages[0].englishName,
+        tagline,
+        title,
+        voteAverage,
+        voteCount
+
+    )
 }
 
 
