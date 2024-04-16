@@ -55,15 +55,23 @@ class DetailFragment : Fragment() {
 
                     pbDetailLoading.visibility = View.GONE
                     tvDetailError.visibility = View.GONE
-
-                    binding.root.context.imageInto(details.posterPath, iwMovie)
+                    details.posterPath.let {
+                        binding.root.context.imageInto(it!!, iwMovie)
+                    }
                     tvMovieName.text = details.title
                     tvTagline.text = details.tagline
                     tvReleaseDate.text = details.releaseDate
-                    tvRuntime.text = minToHours(details.runtime)
-                    tvGenres.text = details.genres.joinToString(", ")
+
+                    details.runtime.let {
+                        tvRuntime.text = minToHours(it!!)
+                    }
+                    details.genres.let {
+                        tvGenres.text = it!!.joinToString(", ")
+                    }
                     tvLanguage.text = details.spokenLanguage
-                    tvRating.text = (details.voteAverage / 2).toString()
+                    details.voteAverage.let {
+                        tvRating.text = (details.voteAverage!! / 2).toString()
+                    }
                     tvReviews.text = details.voteCount.toString()
                     tvOverview.text = details.overview
 

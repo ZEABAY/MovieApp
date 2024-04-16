@@ -18,10 +18,13 @@
         android:id="@+id/searchFragment"
         android:name="com.zaaydar.movieapp.ui.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" >
+        tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_categoryFragment2"
             app:destination="@id/categoryFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_searchResultFragment2"
+            app:destination="@id/searchResultFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -63,12 +66,24 @@
         android:id="@+id/categoryFragment"
         android:name="com.zaaydar.movieapp.ui.search.category.CategoryFragment"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" >
+        tools:layout="@layout/fragment_category">
         <action
             android:id="@+id/action_categoryFragment2_to_detailFragment"
             app:destination="@id/detailFragment" />
         <argument
             android:name="genre"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchResultFragment"
+        android:name="com.zaaydar.movieapp.ui.search.searchresult.SearchResultFragment"
+        android:label="fragment_search_result"
+        tools:layout="@layout/fragment_search_result">
+        <action
+            android:id="@+id/action_searchResultFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <argument
+            android:name="searchText"
+            app:argType="string" />
     </fragment>
 </navigation>

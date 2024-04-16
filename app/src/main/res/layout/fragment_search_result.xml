@@ -5,23 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background"
-    tools:context=".ui.search.category.CategoryFragment">
+    tools:context=".ui.search.searchresult.SearchResultFragment">
 
+    <ImageView
+        android:id="@+id/ivBack"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:scaleX="-1"
+        android:src="@drawable/back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCategory"
-        android:layout_width="match_parent"
+        android:id="@+id/rvSearchResult"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@color/app_background"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ivBack" />
 
+
     <ProgressBar
-        android:id="@+id/pbCategoryLoading"
+        android:id="@+id/pbSearchResultLoading"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvCategoryError"
+        android:id="@+id/tvSearchResultError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/error"
@@ -45,26 +51,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ProgressBar
-        android:id="@+id/pbCategoryLoadingNext"
+        android:id="@+id/pbNowPlayingLoadingNext"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rvCategory"
+        app:layout_constraintBottom_toBottomOf="@+id/rvSearchResult"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/ivBack"
-        android:layout_width="64dp"
-        android:layout_height="64dp"
-        android:scaleX="-1"
-        android:src="@drawable/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
-        android:id="@+id/tvGenreName"
+        android:id="@+id/tvSearchText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -74,7 +71,5 @@
         app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Action" />
-
-
+        tools:text="Dune" />
 </androidx.constraintlayout.widget.ConstraintLayout>

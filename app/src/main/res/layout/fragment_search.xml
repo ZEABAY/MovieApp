@@ -26,7 +26,7 @@
 
 
         <EditText
-            android:id="@+id/editTextText"
+            android:id="@+id/etSearch"
             android:layout_width="match_parent"
             android:layout_height="64dp"
             android:ems="10"
@@ -47,7 +47,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+            app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

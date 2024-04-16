@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentCategoryBinding
+import com.zaaydar.movieapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,6 +39,8 @@ class CategoryFragment : Fragment() {
         arguments?.let {
             genre = CategoryFragmentArgs.fromBundle(it).genre
         }
+
+        binding.tvGenreName.text = Constants.genreMap[genre]
 
         if (genre != null) {
             categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]

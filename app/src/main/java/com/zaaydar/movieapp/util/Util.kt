@@ -8,6 +8,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.zaaydar.movieapp.model.MovieDetailDto
 import com.zaaydar.movieapp.model.MoviesDto
+import com.zaaydar.movieapp.model.SearchResultResponse
 import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
@@ -106,13 +107,32 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
     return list
 }
 
+fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
+    val list = arrayListOf<MoviesDto>()
+
+    for (item in results) {
+
+        val dto = MoviesDto(
+            item.id,
+            item.title,
+            item.genreIds,
+            item.voteAverage,
+            item.posterPath
+        )
+
+        list.add(dto)
+    }
+
+    println(list.toString())
+    return list
+}
+
 
 fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
     val genres = arrayListOf<String>()
     for (item in this.genres) {
         genres.add(item.name)
     }
-
     return MovieDetailDto(
         genres,
         id,

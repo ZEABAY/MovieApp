@@ -15,6 +15,7 @@ object Constants {
     const val LIST = "list"
     const val LANG_EN = "en-US"
     const val LANG_TR = "tr-TR"
+    const val SEARCH_MOVIE = "search/movie"
 
 
     val genreMap = mutableMapOf<Int, String>()

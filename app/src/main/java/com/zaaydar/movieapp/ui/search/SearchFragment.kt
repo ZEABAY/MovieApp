@@ -1,6 +1,7 @@
 package com.zaaydar.movieapp.ui.search
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,16 +29,34 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+            rvCategories.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = categoriesAdapter
 
-
-        binding.rvCategories.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = categoriesAdapter
-
-            categoriesAdapter.itemClick = {
-                val action = SearchFragmentDirections.actionSearchFragmentToCategoryFragment2(it)
-                findNavController().navigate(action)
+                categoriesAdapter.itemClick = {
+                    val action =
+                        SearchFragmentDirections.actionSearchFragmentToCategoryFragment2(it)
+                    findNavController().navigate(action)
+                }
             }
+            etSearch.setOnKeyListener { _, keyCode, event ->
+                if (event.action == KeyEvent.ACTION_DOWN &&
+                    keyCode == KeyEvent.KEYCODE_ENTER &&
+                    etSearch.text.toString().isNotBlank()
+                ) {
+                    val action =
+                        SearchFragmentDirections.actionSearchFragmentToSearchResultFragment2(
+                            etSearch.text.toString()
+                        )
+                    findNavController().navigate(action)
+                    true
+                } else {
+                    false
+                }
+            }
+
+
         }
     }
 }

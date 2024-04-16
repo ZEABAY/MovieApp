@@ -56,7 +56,6 @@ class PopularViewModel @Inject constructor(
 
     fun getNextPagePopularMoviesFromApi() {
         popularLoadingNext.value = true
-
         disposable.add(
             movieRepository.getPopulars(page)
                 .subscribeOn(Schedulers.io())

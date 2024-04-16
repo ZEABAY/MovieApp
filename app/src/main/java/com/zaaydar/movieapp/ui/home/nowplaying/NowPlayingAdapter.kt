@@ -20,17 +20,21 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewH
             with(binding) {
 
                 tvMovieName.text = item.title
-                rbRate.rating = item.voteAverage.toFloat() / 2
+                item.voteAverage?.let {
+                    rbRate.rating = item.voteAverage.toFloat() / 2
+                }
 
                 val genres = mutableListOf<String>()
                 for ((id, genre) in Constants.genreMap) {
-                    if (item.genreIds.contains(id)) {
+                    if (item.genreIds!!.contains(id)) {
                         genres.add(genre)
                     }
                 }
                 tvMovieCategories.text = genres.joinToString(", ")
 
-                binding.root.context.imageInto(item.posterPath, iwMovie)
+                item.posterPath?.let {
+                    binding.root.context.imageInto(it, iwMovie)
+                }
 
 
             }

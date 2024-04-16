@@ -10,7 +10,7 @@ data class MoviesDto(
     @SerializedName("genre_ids")
     val genreIds: List<Int>,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
     @SerializedName("poster_path")
-    val posterPath: String,
-    )
+    val posterPath: String?,
+)

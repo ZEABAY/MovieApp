@@ -17,10 +17,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class NowPlayingFragment : Fragment() {
 
     private lateinit var binding: FragmentNowPlayingBinding
-
     private lateinit var nowPlayingViewModel: NowPlayingViewModel
-
     private val nowPlayingAdapter by lazy { NowPlayingAdapter() }
+
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

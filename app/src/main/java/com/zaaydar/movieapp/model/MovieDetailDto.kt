@@ -8,27 +8,27 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class MovieDetailDto(
     @SerializedName("genres")
-    val genres: List<String>,
+    val genres: List<String>?,
     @SerializedName("id")
-    val id: Int,
+    val id: Int?,
     @SerializedName("overview")
-    val overview: String,
+    val overview: String?,
     @SerializedName("poster_path")
-    val posterPath: String,
+    val posterPath: String?,
     @SerializedName("release_date")
-    val releaseDate: String,
+    val releaseDate: String?,
     @SerializedName("runtime")
-    val runtime: Int,
+    val runtime: Int?,
     @SerializedName("spoken_languages")
-    val spokenLanguage: String,
+    val spokenLanguage: String?,
     @SerializedName("tagline")
-    val tagline: String,
+    val tagline: String?,
     @SerializedName("title")
-    val title: String,
+    val title: String?,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
-    val voteCount: Int
+    val voteCount: Int?
 ) : Parcelable {
     @Parcelize
     data class Genre(

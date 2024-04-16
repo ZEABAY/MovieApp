@@ -20,7 +20,10 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
             with(binding) {
 
                 tvMovieName.text = item.title
-                rbRate.rating = item.voteAverage.toFloat() / 2
+
+                item.voteAverage.let {
+                    rbRate.rating = it!!.toFloat() / 2
+                }
 
                 val genres = mutableListOf<String>()
                 for ((id, genre) in Constants.genreMap) {
@@ -30,7 +33,9 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
                 }
                 tvMovieCategories.text = genres.joinToString(", ")
 
-                binding.root.context.imageInto(item.posterPath, iwMovie)
+                item.posterPath.let {
+                    binding.root.context.imageInto(it!!, iwMovie)
+                }
 
 
             }

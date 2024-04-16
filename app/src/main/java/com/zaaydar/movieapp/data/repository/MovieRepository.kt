@@ -2,6 +2,7 @@ package com.zaaydar.movieapp.data.repository
 
 import com.zaaydar.movieapp.data.remote.MovieApiInterface
 import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.model.SearchResultResponse
 import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
@@ -40,5 +41,9 @@ class MovieRepository @Inject constructor(
 
     fun getDetails(id: Int): Single<MovieDetailResponse> {
         return api.getMovieById(id)
+    }
+
+    fun getSearch(page: Int, searchText: String): Single<SearchResultResponse> {
+        return api.searchMovie(page, searchText)
     }
 }

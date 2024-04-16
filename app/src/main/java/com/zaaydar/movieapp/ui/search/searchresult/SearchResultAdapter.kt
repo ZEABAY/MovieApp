@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.ui.home.upcoming
+package com.zaaydar.movieapp.ui.search.searchresult
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,12 +8,12 @@ import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.imageInto
 
-class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>() {
+class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
 
-    private var upcomingMovies: MutableList<MoviesDto> = arrayListOf()
+    private var searchResultMovies: MutableList<MoviesDto> = arrayListOf()
     var itemClick: (Int) -> Unit = {}
 
-    class UpcomingViewHolder(private var binding: MoviesRowBinding) :
+    class SearchResultViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MoviesDto) {
@@ -32,17 +32,15 @@ class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>
                     }
                 }
                 tvMovieCategories.text = genres.joinToString(", ")
-
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
-
             }
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingViewHolder {
-        return UpcomingViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder {
+        return SearchResultViewHolder(
             MoviesRowBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -50,22 +48,22 @@ class UpcomingAdapter : RecyclerView.Adapter<UpcomingAdapter.UpcomingViewHolder>
     }
 
     override fun getItemCount(): Int {
-        return upcomingMovies.size
+        return searchResultMovies.size
     }
 
-    override fun onBindViewHolder(holder: UpcomingViewHolder, position: Int) {
-        holder.bind(upcomingMovies[position])
+    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int) {
+        holder.bind(searchResultMovies[position])
 
         holder.itemView.setOnClickListener {
-            itemClick(upcomingMovies[position].id)
+            itemClick(searchResultMovies[position].id)
         }
     }
 
-    fun updateUpcomingMoviesList(newUpcomingMovies: List<MoviesDto>) {
-        val startPosition = upcomingMovies.size
-        val filteredNewMovies = newUpcomingMovies.filter { !upcomingMovies.contains(it) }
-        upcomingMovies.addAll(filteredNewMovies)
+
+    fun updateSearchResultMoviesList(newSearchResultMovies: List<MoviesDto>) {
+        val startPosition = searchResultMovies.size
+        val filteredNewMovies = newSearchResultMovies.filter { !searchResultMovies.contains(it) }
+        searchResultMovies.addAll(filteredNewMovies)
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
     }
-
 }

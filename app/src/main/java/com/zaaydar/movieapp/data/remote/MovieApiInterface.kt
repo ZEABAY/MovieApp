@@ -1,6 +1,7 @@
 package com.zaaydar.movieapp.data.remote
 
 import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.model.SearchResultResponse
 import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
@@ -15,6 +16,7 @@ import com.zaaydar.movieapp.util.Constants.LIST
 import com.zaaydar.movieapp.util.Constants.MOVIE
 import com.zaaydar.movieapp.util.Constants.NOW_PLAYING
 import com.zaaydar.movieapp.util.Constants.POPULAR
+import com.zaaydar.movieapp.util.Constants.SEARCH_MOVIE
 import com.zaaydar.movieapp.util.Constants.TOP_RATED
 import com.zaaydar.movieapp.util.Constants.UPCOMING
 import io.reactivex.Single
@@ -67,4 +69,11 @@ interface MovieApiInterface {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = API_KEY
     ): Single<MovieDetailResponse>
+
+    @GET(SEARCH_MOVIE)
+    fun searchMovie(
+        @Query("page") page: Int,
+        @Query("query") searchText: String,
+        @Query("api_key") apiKey: String = API_KEY
+    ): Single<SearchResultResponse>
 }

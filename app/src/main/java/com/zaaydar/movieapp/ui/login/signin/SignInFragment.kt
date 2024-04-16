@@ -29,8 +29,6 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
-
-        // Inflate the layout for this fragment
         return binding.root
     }
 
