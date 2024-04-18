@@ -12,6 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.FragmentSignUpBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
 import com.zaaydar.movieapp.util.Constants
@@ -21,6 +22,8 @@ class SignUpFragment : Fragment() {
 
     private lateinit var binding: FragmentSignUpBinding
     private lateinit var auth: FirebaseAuth
+    private var isSignup = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
@@ -30,9 +33,7 @@ class SignUpFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(layoutInflater, container, false)
-
         return binding.root
     }
 
@@ -49,9 +50,12 @@ class SignUpFragment : Fragment() {
     }
 
     private fun signUp() {
+        if (isSignup) return
+
         val email = binding.etUserMail.text.toString()
         val password = binding.etUserPassword.text.toString()
-
+        binding.etHeader.text = getString(R.string.signing_in)
+        isSignup = true
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             auth.createUserWithEmailAndPassword(email, password)
@@ -59,7 +63,6 @@ class SignUpFragment : Fragment() {
                     authResult.user?.let { user ->
                         Constants.userUUID = user.uid
                     }
-
 
                     FirebaseFirestore.getInstance()
                         .collection("favoriteMovies")
@@ -76,13 +79,15 @@ class SignUpFragment : Fragment() {
                             startActivity(intent)
                             requireActivity().finish()
                         }
-                        .addOnFailureListener {
-                            Toast.makeText(
-                                context,
-                                it.localizedMessage,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                }.addOnFailureListener {
+                    Toast.makeText(
+                        context,
+                        it.localizedMessage,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.addOnCompleteListener {
+                    isSignup = false
+                    binding.btnRegister.isEnabled = true
                 }
         } else {
             Toast.makeText(
@@ -90,7 +95,9 @@ class SignUpFragment : Fragment() {
                 "Enter Email And Password",
                 Toast.LENGTH_SHORT
             ).show()
+            isSignup = false
         }
+        binding.etHeader.text = getString(R.string.sign_up)
     }
 
 }

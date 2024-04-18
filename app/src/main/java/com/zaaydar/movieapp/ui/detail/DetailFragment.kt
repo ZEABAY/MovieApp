@@ -37,9 +37,6 @@ class DetailFragment : Fragment() {
         detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         detailViewModel.getMovieDetailById(movieId)
 
-
-
-
         observeLiveData()
     }
 

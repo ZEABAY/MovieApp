@@ -164,6 +164,23 @@ fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
     )
 }
 
+fun MovieDetailResponse.toMovieDto(): MoviesDto {
+    val favoriteSet = favorites.toSet()
+    val genres = arrayListOf<Int>()
+    for (item in this.genres) {
+        genres.add(item.id)
+    }
+
+    return MoviesDto(
+        id,
+        title,
+        genres,
+        voteAverage,
+        posterPath,
+        favoriteSet.contains(id.toLong())
+    )
+}
+
 fun Context.imageInto(url: String, into: ImageView) {
     val placeholder = CircularProgressDrawable(this).apply {
         strokeWidth = 8f

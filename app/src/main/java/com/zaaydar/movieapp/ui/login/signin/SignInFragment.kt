@@ -7,20 +7,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.FragmentSignInBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
 import com.zaaydar.movieapp.util.Constants.favorites
 import com.zaaydar.movieapp.util.Constants.userUUID
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
     private lateinit var auth: FirebaseAuth
+    private var isSignIn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,46 +54,58 @@ class SignInFragment : Fragment() {
     }
 
     private fun signIn() {
+        if (isSignIn) return
+
         val email = binding.etUserMail.text.toString()
         val password = binding.etUserPassword.text.toString()
-
+        binding.etHeader.text = getString(R.string.signing_in)
+        isSignIn = true
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener { authResult ->
+            lifecycleScope.launch(Dispatchers.IO) {
+                try {
+                    val authResult = auth.signInWithEmailAndPassword(email, password).await()
                     authResult.user?.let { user ->
                         userUUID = user.uid
                     }
 
-                    FirebaseFirestore.getInstance()
+                    val documentSnapshot = FirebaseFirestore.getInstance()
                         .collection("favoriteMovies")
                         .document(userUUID)
-                        .get().addOnSuccessListener { documentSnapshot ->
-                            if (documentSnapshot.exists()) {
-                                favorites =
-                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
+                        .get().await()
 
-                                println(favorites)
-                            }
+                    if (documentSnapshot.exists()) {
+                        favorites = (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
+                        println(favorites)
+                    }
 
-                            val intent = Intent(context, MainActivity::class.java)
-                            startActivity(intent)
-                            requireActivity().finish()
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(
-                                context,
-                                it.localizedMessage,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    launch(Dispatchers.Main) {
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
+                } catch (e: Exception) {
+                    launch(Dispatchers.Main) {
+                        Toast.makeText(
+                            context,
+                            e.localizedMessage,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        binding.etHeader.text = getString(R.string.sign_in)
+                    }
+                } finally {
+                    binding.btnSignIn.isEnabled = true
+                    isSignIn = false
                 }
+            }
         } else {
             Toast.makeText(
                 context,
                 "Enter Email And Password",
                 Toast.LENGTH_SHORT
             ).show()
+            binding.btnSignIn.isEnabled = true
+            isSignIn = false
         }
     }
 }

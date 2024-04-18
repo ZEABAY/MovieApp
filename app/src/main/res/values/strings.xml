@@ -7,6 +7,7 @@
     <string name="btn_have_acc">Have Acc</string>
     <string name="btn_register">Register</string>
     <string name="sign_in">Sign In</string>
+    <string name="signing_in">Signing In</string>
     <string name="sign_up">Sign Up</string>
 
     <string name="search">Search</string>
@@ -29,4 +30,6 @@
     <string name="error">ERROR</string>
     <string name="movie_name_holder">MovieName</string>
     <string name="categories_holder">Categories</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="favorites">Favorites</string>
 </resources>
