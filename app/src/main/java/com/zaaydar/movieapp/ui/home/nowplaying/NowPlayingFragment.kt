@@ -108,11 +108,21 @@ class NowPlayingFragment : Fragment() {
                 }
             }
         }
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvNowPlaying.adapter = null
+    }
+
+
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            nowPlayingAdapter.refresh()
+        }
     }
 
 }

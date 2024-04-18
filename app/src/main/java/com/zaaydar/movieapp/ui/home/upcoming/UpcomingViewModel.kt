@@ -54,7 +54,7 @@ class UpcomingViewModel @Inject constructor(
     }
 
     fun getNextPageUpcomingMoviesFromApi() {
-        upcomingLoading.value = true
+        upcomingLoadingNext.value = true
 
         disposable.add(
             movieRepository.getUpcoming(upcomingPage)

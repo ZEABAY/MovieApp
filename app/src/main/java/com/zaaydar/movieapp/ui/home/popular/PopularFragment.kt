@@ -114,11 +114,21 @@ class PopularFragment : Fragment() {
                 }
             }
         }
+
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding.rvPopular.adapter = null
+    }
+
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            popularAdapter.refresh()
+        }
     }
 
 }

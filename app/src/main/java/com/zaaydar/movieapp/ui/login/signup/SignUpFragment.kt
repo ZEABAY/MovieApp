@@ -11,8 +11,10 @@ import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.databinding.FragmentSignUpBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
+import com.zaaydar.movieapp.util.Constants
 
 
 class SignUpFragment : Fragment() {
@@ -27,7 +29,7 @@ class SignUpFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(layoutInflater, container, false)
 
@@ -53,17 +55,34 @@ class SignUpFragment : Fragment() {
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(
-                        context,
-                        it.localizedMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                .addOnSuccessListener { authResult ->
+                    authResult.user?.let { user ->
+                        Constants.userUUID = user.uid
+                    }
+
+
+                    FirebaseFirestore.getInstance()
+                        .collection("favoriteMovies")
+                        .document(Constants.userUUID)
+                        .get().addOnSuccessListener { documentSnapshot ->
+                            if (documentSnapshot.exists()) {
+                                Constants.favorites =
+                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
+
+                                println(Constants.favorites)
+                            }
+
+                            val intent = Intent(context, MainActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                it.localizedMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
         } else {
             Toast.makeText(

@@ -114,4 +114,13 @@ class UpcomingFragment : Fragment() {
         super.onDestroyView()
         binding.rvUpcoming.adapter = null
     }
+
+
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            upcomingAdapter.refresh()
+        }
+    }
 }

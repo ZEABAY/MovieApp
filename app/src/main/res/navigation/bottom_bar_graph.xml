@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_search">
         <action
             android:id="@+id/action_searchFragment_to_categoryFragment2"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryResultFragment" />
         <action
             android:id="@+id/action_searchFragment_to_searchResultFragment2"
             app:destination="@id/searchResultFragment" />
@@ -63,8 +63,8 @@
         android:label="fragment_upcoming"
         tools:layout="@layout/fragment_upcoming" />
     <fragment
-        android:id="@+id/categoryFragment"
-        android:name="com.zaaydar.movieapp.ui.search.category.CategoryFragment"
+        android:id="@+id/categoryResultFragment"
+        android:name="com.zaaydar.movieapp.ui.search.category.CategoryResultFragment"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category">
         <action

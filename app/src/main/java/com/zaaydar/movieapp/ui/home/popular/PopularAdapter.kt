@@ -1,11 +1,18 @@
 package com.zaaydar.movieapp.ui.home.popular
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
+import com.zaaydar.movieapp.util.Constants.favorites
 import com.zaaydar.movieapp.util.Constants.genreMap
+import com.zaaydar.movieapp.util.Constants.userUUID
+import com.zaaydar.movieapp.util.checkIsFav
 import com.zaaydar.movieapp.util.imageInto
 
 class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
@@ -34,7 +41,26 @@ class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() 
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
+
+                checkIwFav(item, iwFav)
+
+                iwFav.setOnClickListener {
+                    if (favorites.contains(item.id.toLong())) favorites.remove(item.id.toLong())
+                    else favorites.add(item.id.toLong())
+                    item.isFavorite = !item.isFavorite
+                    checkIwFav(item, iwFav)
+
+                    FirebaseFirestore.getInstance()
+                        .collection("favoriteMovies")
+                        .document(userUUID)
+                        .set(hashMapOf("favs" to favorites))
+                }
             }
+        }
+
+        private fun checkIwFav(item: MoviesDto, iwFav: ImageView) {
+            if (item.isFavorite) iwFav.setImageResource(R.drawable.redheart)
+            else iwFav.setImageResource(R.drawable.emptyheart)
         }
     }
 
@@ -57,7 +83,6 @@ class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() 
             itemClick(popularMovies[position].id)
         }
 
-
     }
 
     fun updatePopularList(newPopularMovies: List<MoviesDto>) {
@@ -65,6 +90,15 @@ class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() 
         val filteredNewMovies = newPopularMovies.filter { !popularMovies.contains(it) }
         popularMovies.addAll(filteredNewMovies)
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun refresh() {
+        for (item in popularMovies) {
+            item.checkIsFav()
+        }
+
+        notifyDataSetChanged()
     }
 
 

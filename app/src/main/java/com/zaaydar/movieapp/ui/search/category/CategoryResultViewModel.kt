@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 
-class CategoryViewModel @Inject constructor(
+class CategoryResultViewModel @Inject constructor(
     private val movieRepository: MovieRepository,
 ) : ViewModel() {
     private val disposable = CompositeDisposable()

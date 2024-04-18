@@ -68,9 +68,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx")
-
-    // Gson
-    //implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.firebase:firebase-firestore")
 
     // Retrofit
     val ret_version = "2.9.0"
@@ -88,7 +86,7 @@ dependencies {
     val gli_ver = "4.16.0"
     implementation("com.github.bumptech.glide:glide:$gli_ver")
 
-    // Hilt
+    //Hilt
     val hilt_ver = "2.48"
     implementation("com.google.dagger:hilt-android:$hilt_ver")
     kapt("com.google.dagger:hilt-android-compiler:$hilt_ver")

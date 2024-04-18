@@ -1,11 +1,11 @@
 package com.zaaydar.movieapp.data.remote
 
 import com.zaaydar.movieapp.model.MovieGenre
-import com.zaaydar.movieapp.model.SearchResultResponse
 import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
+import com.zaaydar.movieapp.model.searchresult.SearchResultResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
 import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
 import com.zaaydar.movieapp.util.Constants.API_KEY

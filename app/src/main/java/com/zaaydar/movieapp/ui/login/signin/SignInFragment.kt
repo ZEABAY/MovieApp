@@ -11,8 +11,11 @@ import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.databinding.FragmentSignInBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
+import com.zaaydar.movieapp.util.Constants.favorites
+import com.zaaydar.movieapp.util.Constants.userUUID
 
 class SignInFragment : Fragment() {
 
@@ -35,12 +38,6 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val intent = Intent(context, MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
-
-
         binding.btnSignUp.setOnClickListener {
             val action = SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
             Navigation.findNavController(it).navigate(action)
@@ -57,17 +54,33 @@ class SignInFragment : Fragment() {
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
             auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(
-                        context,
-                        it.localizedMessage,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                .addOnSuccessListener { authResult ->
+                    authResult.user?.let { user ->
+                        userUUID = user.uid
+                    }
+
+                    FirebaseFirestore.getInstance()
+                        .collection("favoriteMovies")
+                        .document(userUUID)
+                        .get().addOnSuccessListener { documentSnapshot ->
+                            if (documentSnapshot.exists()) {
+                                favorites =
+                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
+
+                                println(favorites)
+                            }
+
+                            val intent = Intent(context, MainActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(
+                                context,
+                                it.localizedMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
         } else {
             Toast.makeText(

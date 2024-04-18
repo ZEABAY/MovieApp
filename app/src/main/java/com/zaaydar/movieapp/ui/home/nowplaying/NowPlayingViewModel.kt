@@ -61,7 +61,6 @@ class NowPlayingViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<NowPlayingResponse>() {
                     override fun onSuccess(t: NowPlayingResponse) {
-
                         nowPlayingError.value = false
                         nowPlayingLoadingNext.value = false
                         nowPlayingMovies.value = t.toMoviesDto()

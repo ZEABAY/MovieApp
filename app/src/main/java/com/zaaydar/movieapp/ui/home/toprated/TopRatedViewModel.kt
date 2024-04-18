@@ -53,7 +53,7 @@ class TopRatedViewModel @Inject constructor(
     }
 
     fun getNextPageTopRatedMoviesFromApi() {
-        topRatedLoading.value = true
+        topRatedLoadingNext.value = true
 
         disposable.add(
             movieRepository.getTopRated(topRatedPage)

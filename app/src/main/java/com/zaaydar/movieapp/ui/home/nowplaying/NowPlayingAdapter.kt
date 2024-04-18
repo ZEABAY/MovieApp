@@ -1,11 +1,18 @@
 package com.zaaydar.movieapp.ui.home.nowplaying
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.FirebaseFirestore
+import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.Constants.favorites
+import com.zaaydar.movieapp.util.Constants.genreMap
+import com.zaaydar.movieapp.util.Constants.userUUID
+import com.zaaydar.movieapp.util.checkIsFav
 import com.zaaydar.movieapp.util.imageInto
 
 class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder>() {
@@ -25,8 +32,8 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewH
                 }
 
                 val genres = mutableListOf<String>()
-                for ((id, genre) in Constants.genreMap) {
-                    if (item.genreIds!!.contains(id)) {
+                for ((id, genre) in genreMap) {
+                    if (item.genreIds.contains(id)) {
                         genres.add(genre)
                     }
                 }
@@ -35,9 +42,24 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewH
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
+                checkIwFav(item, iwFav)
+                iwFav.setOnClickListener {
+                    if (favorites.contains(item.id.toLong())) favorites.remove(item.id.toLong())
+                    else favorites.add(item.id.toLong())
+                    item.isFavorite = !item.isFavorite
+                    checkIwFav(item, iwFav)
 
-
+                    FirebaseFirestore.getInstance()
+                        .collection("favoriteMovies")
+                        .document(userUUID)
+                        .set(hashMapOf("favs" to favorites))
+                }
             }
+        }
+
+        private fun checkIwFav(item: MoviesDto, iwFav: ImageView) {
+            if (item.isFavorite) iwFav.setImageResource(R.drawable.redheart)
+            else iwFav.setImageResource(R.drawable.emptyheart)
         }
     }
 
@@ -68,4 +90,12 @@ class NowPlayingAdapter : RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewH
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
+    fun refresh() {
+        for (item in nowPlayingMovies) {
+            item.checkIsFav()
+        }
+
+        notifyDataSetChanged()
+    }
 }

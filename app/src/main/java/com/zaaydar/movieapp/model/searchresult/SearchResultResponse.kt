@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.model
+package com.zaaydar.movieapp.model.searchresult
 
 
 import android.os.Parcelable

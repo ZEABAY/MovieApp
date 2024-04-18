@@ -8,26 +8,28 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.zaaydar.movieapp.model.MovieDetailDto
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.model.SearchResultResponse
 import com.zaaydar.movieapp.model.category.CategoryResponse
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
 import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
 import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
+import com.zaaydar.movieapp.model.searchresult.SearchResultResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
 import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
+import com.zaaydar.movieapp.util.Constants.favorites
 
 
 fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
-
         val dto = MoviesDto(
             item.id,
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -37,6 +39,7 @@ fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
 
 fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
 
@@ -45,7 +48,8 @@ fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -55,6 +59,7 @@ fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
 
 fun CategoryResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
 
@@ -63,7 +68,8 @@ fun CategoryResponse.toMoviesDto(): List<MoviesDto> {
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -73,6 +79,7 @@ fun CategoryResponse.toMoviesDto(): List<MoviesDto> {
 
 fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
 
@@ -81,7 +88,8 @@ fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -91,6 +99,7 @@ fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
 
 fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
 
@@ -99,7 +108,8 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -109,6 +119,7 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
 
 fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
+    val favoriteSet = favorites.toSet()
 
     for (item in results) {
 
@@ -117,7 +128,8 @@ fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
             item.title,
             item.genreIds,
             item.voteAverage,
-            item.posterPath
+            item.posterPath,
+            favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
@@ -127,6 +139,10 @@ fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
     return list
 }
 
+fun MoviesDto.checkIsFav() {
+    val favoriteSet = favorites.toSet()
+    isFavorite = favoriteSet.contains(id.toLong())
+}
 
 fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
     val genres = arrayListOf<String>()
@@ -144,11 +160,9 @@ fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
         tagline,
         title,
         voteAverage,
-        voteCount
-
+        voteCount,
     )
 }
-
 
 fun Context.imageInto(url: String, into: ImageView) {
     val placeholder = CircularProgressDrawable(this).apply {

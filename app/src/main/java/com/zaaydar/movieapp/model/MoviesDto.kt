@@ -13,4 +13,8 @@ data class MoviesDto(
     val voteAverage: Double?,
     @SerializedName("poster_path")
     val posterPath: String?,
+    @SerializedName("is_favorite")
+    var isFavorite: Boolean = false
 )
+
+

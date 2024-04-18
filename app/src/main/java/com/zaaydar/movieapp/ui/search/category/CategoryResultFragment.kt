@@ -15,12 +15,12 @@ import com.zaaydar.movieapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CategoryFragment : Fragment() {
+class CategoryResultFragment : Fragment() {
 
     private lateinit var binding: FragmentCategoryBinding
 
-    private lateinit var categoryViewModel: CategoryViewModel
-    private val categoryAdapter by lazy { CategoryAdapter() }
+    private lateinit var categoryResultViewModel: CategoryResultViewModel
+    private val categoryResultAdapter by lazy { CategoryResultAdapter() }
     private var genre: Int? = null
 
     override fun onCreateView(
@@ -37,14 +37,14 @@ class CategoryFragment : Fragment() {
 
 
         arguments?.let {
-            genre = CategoryFragmentArgs.fromBundle(it).genre
+            genre = CategoryResultFragmentArgs.fromBundle(it).genre
         }
 
         binding.tvGenreName.text = Constants.genreMap[genre]
 
         if (genre != null) {
-            categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
-            categoryViewModel.getMoviesByCategoryFromApi(genre!!)
+            categoryResultViewModel = ViewModelProvider(this)[CategoryResultViewModel::class.java]
+            categoryResultViewModel.getMoviesByCategoryFromApi(genre!!)
         } else {
             Log.e("SearchFragment", "Genre argument is null")
         }
@@ -56,10 +56,10 @@ class CategoryFragment : Fragment() {
         binding.rvCategory.apply {
 
             layoutManager = LinearLayoutManager(context)
-            adapter = categoryAdapter
+            adapter = categoryResultAdapter
 
-            categoryAdapter.itemClick = {
-                val action = CategoryFragmentDirections.actionCategoryFragment2ToDetailFragment(it)
+            categoryResultAdapter.itemClick = {
+                val action = CategoryResultFragmentDirections.actionCategoryFragment2ToDetailFragment(it)
                 findNavController().navigate(action)
             }
 
@@ -68,7 +68,7 @@ class CategoryFragment : Fragment() {
                     super.onScrollStateChanged(recyclerView, newState)
 
                     if (!recyclerView.canScrollVertically(1) && genre != null) {
-                        categoryViewModel.getNextPageCategoryFromApi(genre!!)
+                        categoryResultViewModel.getNextPageCategoryFromApi(genre!!)
                     }
                 }
             })
@@ -79,18 +79,18 @@ class CategoryFragment : Fragment() {
     }
 
     private fun observeLiveData() {
-        categoryViewModel.categoryMovies.observe(viewLifecycleOwner) { movies ->
+        categoryResultViewModel.categoryMovies.observe(viewLifecycleOwner) { movies ->
             movies?.let {
                 binding.apply {
                     rvCategory.visibility = View.VISIBLE
                     pbCategoryLoading.visibility = View.GONE
                     pbCategoryLoadingNext.visibility = View.GONE
-                    categoryAdapter.updateCategoryList(movies)
+                    categoryResultAdapter.updateCategoryList(movies)
                 }
             }
         }
 
-        categoryViewModel.categoryError.observe(viewLifecycleOwner) { error ->
+        categoryResultViewModel.categoryError.observe(viewLifecycleOwner) { error ->
             error?.let {
                 binding.apply {
                     tvCategoryError.visibility = if (error) View.VISIBLE else View.GONE
@@ -98,7 +98,7 @@ class CategoryFragment : Fragment() {
             }
         }
 
-        categoryViewModel.categoryLoading.observe(viewLifecycleOwner) { loading ->
+        categoryResultViewModel.categoryLoading.observe(viewLifecycleOwner) { loading ->
             loading?.let {
                 binding.apply {
                     if (loading) {
@@ -112,7 +112,7 @@ class CategoryFragment : Fragment() {
             }
         }
 
-        categoryViewModel.categoryLoadingNext.observe(viewLifecycleOwner) { loadingNext ->
+        categoryResultViewModel.categoryLoadingNext.observe(viewLifecycleOwner) { loadingNext ->
             loadingNext?.let {
                 binding.apply {
                     if (loadingNext) {

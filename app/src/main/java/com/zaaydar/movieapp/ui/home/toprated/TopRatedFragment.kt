@@ -114,4 +114,12 @@ class TopRatedFragment : Fragment() {
         binding.rvTopRated.adapter = null
     }
 
+
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+
+        if (menuVisible) {
+            topRatedAdapter.refresh()
+        }
+    }
 }
