@@ -23,6 +23,7 @@ class DetailViewModel @Inject constructor(
     val movieDetail = MutableLiveData<MovieDetailDto>()
     val detailLoading = MutableLiveData<Boolean>()
     val detailError = MutableLiveData<Boolean>()
+    val videoKey = MutableLiveData<String>()
 
     fun getMovieDetailById(id: Int) {
         detailLoading.value = true
@@ -47,6 +48,24 @@ class DetailViewModel @Inject constructor(
                 })
         )
 
+    }
+
+    fun getMovieTrailer(movieId: Int) {
+        disposable.add(
+            movieRepository.getMovieTrailer(movieId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(object : DisposableSingleObserver<String>() {
+                    override fun onSuccess(t: String) {
+                        videoKey.value = t
+                    }
+
+                    override fun onError(e: Throwable) {
+                        e.printStackTrace()
+                    }
+
+                })
+        )
     }
 
 }

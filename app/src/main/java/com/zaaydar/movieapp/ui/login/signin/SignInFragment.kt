@@ -31,6 +31,12 @@ class SignInFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+
+        val currentUser = auth.currentUser
+
+        if (currentUser != null) intentFromMainToHome()
+
+
     }
 
     override fun onCreateView(
@@ -80,9 +86,7 @@ class SignInFragment : Fragment() {
                     }
 
                     launch(Dispatchers.Main) {
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                        requireActivity().finish()
+                        intentFromMainToHome()
                     }
                 } catch (e: Exception) {
                     launch(Dispatchers.Main) {
@@ -107,5 +111,11 @@ class SignInFragment : Fragment() {
             binding.btnSignIn.isEnabled = true
             isSignIn = false
         }
+    }
+
+    private fun intentFromMainToHome() {
+        val intent = Intent(context, MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

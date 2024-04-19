@@ -46,4 +46,11 @@ class MovieRepository @Inject constructor(
     fun getSearch(page: Int, searchText: String): Single<SearchResultResponse> {
         return api.searchMovie(page, searchText)
     }
+
+    fun getMovieTrailer(movieId: Int): Single<String> {
+
+        return api.getMovieTrailer(movieId).map {
+            it.results[0].key
+        }
+    }
 }

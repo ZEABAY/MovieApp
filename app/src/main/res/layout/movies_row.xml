@@ -6,10 +6,11 @@
 
     <ImageView
         android:id="@+id/iwMovie"
-        android:layout_width="153dp"
-        android:layout_height="272dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="150dp"
+        android:layout_height="0dp"
         android:layout_marginTop="8dp"
+        android:scaleType="centerCrop"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,8 +20,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/consLMovieDetails"
         android:layout_width="0dp"
-        android:layout_height="215dp"
         android:layout_marginTop="8dp"
+        android:layout_height="215dp"
         android:layout_marginEnd="16dp"
         android:background="@color/card_background"
         app:layout_constraintBottom_toBottomOf="parent"

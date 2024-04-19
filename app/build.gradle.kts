@@ -92,6 +92,13 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$hilt_ver")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    // YouTube Player
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+
+    // Chromecast Sender
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
+
+
 }
 
 // Allow references to generated code

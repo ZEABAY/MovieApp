@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.zaaydar.movieapp.databinding.FragmentDetailBinding
 import com.zaaydar.movieapp.util.imageInto
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,7 +38,7 @@ class DetailFragment : Fragment() {
 
         detailViewModel = ViewModelProvider(this)[DetailViewModel::class.java]
         detailViewModel.getMovieDetailById(movieId)
-
+        detailViewModel.getMovieTrailer(movieId)
         observeLiveData()
     }
 
@@ -52,27 +54,25 @@ class DetailFragment : Fragment() {
 
                     pbDetailLoading.visibility = View.GONE
                     tvDetailError.visibility = View.GONE
-                    details.posterPath.let {
-                        binding.root.context.imageInto(it!!, iwMovie)
+                    details.posterPath?.let {
+                        binding.root.context.imageInto(it, iwMovie)
                     }
                     tvMovieName.text = details.title
                     tvTagline.text = details.tagline
                     tvReleaseDate.text = details.releaseDate
 
-                    details.runtime.let {
-                        tvRuntime.text = minToHours(it!!)
+                    details.runtime?.let {
+                        tvRuntime.text = minToHours(it)
                     }
-                    details.genres.let {
-                        tvGenres.text = it!!.joinToString(", ")
+                    details.genres?.let {
+                        tvGenres.text = it.joinToString(", ")
                     }
                     tvLanguage.text = details.spokenLanguage
-                    details.voteAverage.let {
-                        tvRating.text = (details.voteAverage!! / 2).toString()
+                    details.voteAverage?.let {
+                        tvRating.text = "IMDB " + (details.voteAverage / 2).toString()
                     }
                     tvReviews.text = details.voteCount.toString()
                     tvOverview.text = details.overview
-
-
                 }
             }
         }
@@ -96,6 +96,19 @@ class DetailFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        detailViewModel.videoKey.observe(viewLifecycleOwner) { key ->
+            key?.let {
+                binding.ypvTrailer.addYouTubePlayerListener(object :
+                    AbstractYouTubePlayerListener() {
+                    override fun onReady(youTubePlayer: YouTubePlayer) {
+                        super.onReady(youTubePlayer)
+                        youTubePlayer.cueVideo(key, 0f)
+                    }
+                })
+            }
+
         }
     }
 
