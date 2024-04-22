@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
-import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -34,11 +32,11 @@ class UpcomingViewModel @Inject constructor(
         disposable.add(
             movieRepository.getUpcoming(upcomingPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<UpcomingResponse>() {
-                    override fun onSuccess(t: UpcomingResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
                         upcomingError.value = false
                         upcomingLoading.value = false
-                        upcomingMovies.value = t.toMoviesDto()
+                        upcomingMovies.value = t
                         upcomingPage++
                     }
 
@@ -60,12 +58,12 @@ class UpcomingViewModel @Inject constructor(
             movieRepository.getUpcoming(upcomingPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<UpcomingResponse>() {
-                    override fun onSuccess(t: UpcomingResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
 
                         upcomingError.value = false
                         upcomingLoadingNext.value = false
-                        upcomingMovies.value = t.toMoviesDto()
+                        upcomingMovies.value = t
                         upcomingPage++
                     }
 

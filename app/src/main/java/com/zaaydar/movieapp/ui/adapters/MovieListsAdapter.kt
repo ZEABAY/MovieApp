@@ -1,4 +1,4 @@
-package com.zaaydar.movieapp.ui.home.popular
+package com.zaaydar.movieapp.ui.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
@@ -10,39 +10,30 @@ import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants.favorites
-import com.zaaydar.movieapp.util.Constants.genreMap
 import com.zaaydar.movieapp.util.Constants.userUUID
 import com.zaaydar.movieapp.util.checkIsFav
 import com.zaaydar.movieapp.util.imageInto
 
-class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() {
+class MovieListsAdapter : RecyclerView.Adapter<MovieListsAdapter.MovieListsViewHolder>() {
 
-    private var popularMovies: MutableList<MoviesDto> = arrayListOf()
+    private var movies: MutableList<MoviesDto> = arrayListOf()
     var itemClick: (Int) -> Unit = {}
 
-    class PopularViewHolder(private var binding: MoviesRowBinding) :
+    class MovieListsViewHolder(private var binding: MoviesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MoviesDto) {
             with(binding) {
 
                 tvMovieName.text = item.title
-                item.voteAverage?.let {
-                    rbRate.rating = it.toFloat() / 2
-                }
+                tvMovieCategories.text = item.genreStrings
+                rbRate.rating = item.voteAverage
 
-                val genres = mutableListOf<String>()
-                for ((id, genre) in genreMap) {
-                    if (item.genreIds.contains(id)) {
-                        genres.add(genre)
-                    }
-                }
-                tvMovieCategories.text = genres.joinToString(", ")
+                checkIwFav(item, iwFav)
+
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
-
-                checkIwFav(item, iwFav)
 
                 iwFav.setOnClickListener {
                     if (favorites.contains(item.id.toLong())) favorites.remove(item.id.toLong())
@@ -64,8 +55,8 @@ class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() 
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PopularViewHolder {
-        return PopularViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListsViewHolder {
+        return MovieListsViewHolder(
             MoviesRowBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
@@ -73,28 +64,28 @@ class PopularAdapter : RecyclerView.Adapter<PopularAdapter.PopularViewHolder>() 
     }
 
     override fun getItemCount(): Int {
-        return popularMovies.size
+        return movies.size
     }
 
-    override fun onBindViewHolder(holder: PopularViewHolder, position: Int) {
-        holder.bind(popularMovies[position])
+    override fun onBindViewHolder(holder: MovieListsViewHolder, position: Int) {
+        holder.bind(movies[position])
 
         holder.itemView.setOnClickListener {
-            itemClick(popularMovies[position].id)
+            itemClick(movies[position].id)
         }
 
     }
 
-    fun updatePopularList(newPopularMovies: List<MoviesDto>) {
-        val startPosition = popularMovies.size
-        val filteredNewMovies = newPopularMovies.filter { !popularMovies.contains(it) }
-        popularMovies.addAll(filteredNewMovies)
+    fun updateMoviesList(newMoviesMovies: List<MoviesDto>) {
+        val startPosition = movies.size
+        val filteredNewMovies = newMoviesMovies.filter { !movies.contains(it) }
+        movies.addAll(filteredNewMovies)
         notifyItemRangeInserted(startPosition, filteredNewMovies.size)
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun refresh() {
-        for (item in popularMovies) {
+        for (item in movies) {
             item.checkIsFav()
         }
 

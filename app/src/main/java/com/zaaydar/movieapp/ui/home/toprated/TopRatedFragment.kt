@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentTopRatedBinding
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +21,7 @@ class TopRatedFragment : Fragment() {
 
     private lateinit var topRatedViewModel: TopRatedViewModel
 
-    private val topRatedAdapter by lazy { TopRatedAdapter() }
+    private val topRatedAdapter by lazy { MovieListsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,7 +68,7 @@ class TopRatedFragment : Fragment() {
                     rvTopRated.visibility = View.VISIBLE
                     pbTopRatedLoading.visibility = View.GONE
                     pbTopRatedLoadingNext.visibility = View.GONE
-                    topRatedAdapter.updateTopRatedMoviesList(topRated)
+                    topRatedAdapter.updateMoviesList(topRated)
                 }
             }
         }

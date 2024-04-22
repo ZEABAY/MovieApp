@@ -10,7 +10,6 @@ import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.util.Constants
 import com.zaaydar.movieapp.util.Constants.favorites
-import com.zaaydar.movieapp.util.Constants.genreMap
 import com.zaaydar.movieapp.util.imageInto
 
 class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder>() {
@@ -25,22 +24,15 @@ class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchResul
             with(binding) {
 
                 tvMovieName.text = item.title
+                tvMovieCategories.text = item.genreStrings
+                rbRate.rating = item.voteAverage
 
-                item.voteAverage?.let {
-                    rbRate.rating = it.toFloat() / 2
-                }
+                checkIwFav(item, iwFav)
 
-                val genres = mutableListOf<String>()
-                for ((id, genre) in genreMap) {
-                    if (item.genreIds.contains(id)) {
-                        genres.add(genre)
-                    }
-                }
-                tvMovieCategories.text = genres.joinToString(", ")
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
-                checkIwFav(item, iwFav)
+
                 iwFav.setOnClickListener {
                     if (favorites.contains(item.id.toLong())) favorites.remove(item.id.toLong())
                     else favorites.add(item.id.toLong())

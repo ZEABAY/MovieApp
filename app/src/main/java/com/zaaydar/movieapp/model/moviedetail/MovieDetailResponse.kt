@@ -54,7 +54,7 @@ data class MovieDetailResponse(
     @SerializedName("video")
     val video: Boolean,
     @SerializedName("vote_average")
-    val voteAverage: Double,
+    val voteAverage: Double?,
     @SerializedName("vote_count")
     val voteCount: Int
 ) : Parcelable {

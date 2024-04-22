@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.model.toprated.TopRatedResponse
-import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -33,11 +31,11 @@ class TopRatedViewModel @Inject constructor(
         disposable.add(
             movieRepository.getTopRated(topRatedPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<TopRatedResponse>() {
-                    override fun onSuccess(t: TopRatedResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
                         topRatedError.value = false
                         topRatedLoading.value = false
-                        topRatedMovies.value = t.toMoviesDto()
+                        topRatedMovies.value = t
                         topRatedPage++
                     }
 
@@ -59,12 +57,12 @@ class TopRatedViewModel @Inject constructor(
             movieRepository.getTopRated(topRatedPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<TopRatedResponse>() {
-                    override fun onSuccess(t: TopRatedResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
 
                         topRatedError.value = false
                         topRatedLoadingNext.value = false
-                        topRatedMovies.value = t.toMoviesDto()
+                        topRatedMovies.value = t
                         topRatedPage++
                     }
 

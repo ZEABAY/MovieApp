@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
-import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -35,11 +33,11 @@ class PopularViewModel @Inject constructor(
             movieRepository.getPopulars(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
-                    override fun onSuccess(t: PopularMoviesResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
                         popularError.value = false
                         popularLoading.value = false
-                        popularMovies.value = t.toMoviesDto()
+                        popularMovies.value = t
                         page++
                     }
 
@@ -60,12 +58,12 @@ class PopularViewModel @Inject constructor(
             movieRepository.getPopulars(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<PopularMoviesResponse>() {
-                    override fun onSuccess(t: PopularMoviesResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
 
                         popularError.value = false
                         popularLoadingNext.value = false
-                        popularMovies.value = t.toMoviesDto()
+                        popularMovies.value = t
                         page++
                     }
 

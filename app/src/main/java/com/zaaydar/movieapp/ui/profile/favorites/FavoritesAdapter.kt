@@ -23,22 +23,14 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHold
             with(binding) {
 
                 tvMovieName.text = item.title
-                item.voteAverage?.let {
-                    rbRate.rating = it.toFloat() / 2
-                }
+                tvMovieCategories.text = item.genreStrings
+                rbRate.rating = item.voteAverage
 
-                val genres = mutableListOf<String>()
-                for ((id, genre) in Constants.genreMap) {
-                    if (item.genreIds.contains(id)) {
-                        genres.add(genre)
-                    }
-                }
-                tvMovieCategories.text = genres.joinToString(", ")
+                checkIwFav(item, iwFav)
+
                 item.posterPath?.let {
                     binding.root.context.imageInto(it, iwMovie)
                 }
-
-                checkIwFav(item, iwFav)
 
                 iwFav.setOnClickListener {
                     if (Constants.favorites.contains(item.id.toLong())) Constants.favorites.remove(

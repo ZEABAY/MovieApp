@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentPopularBinding
 import com.zaaydar.movieapp.model.MovieGenre
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import com.zaaydar.movieapp.util.Constants.genreMap
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,7 @@ class PopularFragment : Fragment() {
     private lateinit var binding: FragmentPopularBinding
 
     private lateinit var popularViewModel: PopularViewModel
-    private val popularAdapter by lazy { PopularAdapter() }
+    private val moviesAdapter by lazy { MovieListsAdapter() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,9 +38,9 @@ class PopularFragment : Fragment() {
 
         binding.rvPopular.apply {
 
-            adapter = popularAdapter
+            adapter = moviesAdapter
 
-            popularAdapter.itemClick = {
+            moviesAdapter.itemClick = {
                 val action = HomeFragmentDirections.actionHomeFragmentToDetailFragment(it)
                 findNavController().navigate(action)
             }
@@ -66,7 +67,7 @@ class PopularFragment : Fragment() {
                     rvPopular.visibility = View.VISIBLE
                     pbPopularLoading.visibility = View.GONE
                     pbPopularLoadingNext.visibility = View.GONE
-                    popularAdapter.updatePopularList(movies)
+                    moviesAdapter.updateMoviesList(movies)
                 }
             }
         }
@@ -127,7 +128,7 @@ class PopularFragment : Fragment() {
         super.setMenuVisibility(menuVisible)
 
         if (menuVisible) {
-            popularAdapter.refresh()
+            moviesAdapter.refresh()
         }
     }
 

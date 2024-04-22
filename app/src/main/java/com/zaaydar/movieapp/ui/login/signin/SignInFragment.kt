@@ -32,9 +32,9 @@ class SignInFragment : Fragment() {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
 
-        val currentUser = auth.currentUser
+        //val currentUser = auth.currentUser
 
-        if (currentUser != null) intentFromMainToHome()
+        //if (currentUser != null) intentFromMainToHome()
 
 
     }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentNowPlayingBinding
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +19,7 @@ class NowPlayingFragment : Fragment() {
 
     private lateinit var binding: FragmentNowPlayingBinding
     private lateinit var nowPlayingViewModel: NowPlayingViewModel
-    private val nowPlayingAdapter by lazy { NowPlayingAdapter() }
+    private val nowPlayingAdapter by lazy { MovieListsAdapter() }
 
 
 
@@ -68,7 +69,7 @@ class NowPlayingFragment : Fragment() {
                     rvNowPlaying.visibility = View.VISIBLE
                     pbNowPlayingLoading.visibility = View.GONE
                     pbNowPlayingLoadingNext.visibility = View.GONE
-                    nowPlayingAdapter.updateNowPlayingMoviesList(nowPlaying)
+                    nowPlayingAdapter.updateMoviesList(nowPlaying)
                 }
             }
         }

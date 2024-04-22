@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentUpcomingBinding
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +21,7 @@ class UpcomingFragment : Fragment() {
 
     private lateinit var upcomingViewModel: UpcomingViewModel
 
-    private val upcomingAdapter by lazy { UpcomingAdapter() }
+    private val upcomingAdapter by lazy { MovieListsAdapter() }
 
 
     override fun onCreateView(
@@ -68,7 +69,7 @@ class UpcomingFragment : Fragment() {
                     rvUpcoming.visibility = View.VISIBLE
                     pbUpcomingLoading.visibility = View.GONE
                     pbUpcomingLoadingNext.visibility = View.GONE
-                    upcomingAdapter.updateUpcomingMoviesList(upcoming)
+                    upcomingAdapter.updateMoviesList(upcoming)
                 }
             }
         }

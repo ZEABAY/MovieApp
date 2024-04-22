@@ -20,14 +20,27 @@ import com.zaaydar.movieapp.util.Constants.favorites
 
 fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
+
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
@@ -39,15 +52,27 @@ fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
 
 fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
 
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
@@ -59,35 +84,60 @@ fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
 
 fun CategoryResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
 
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
 
         list.add(dto)
     }
+
     return list
 }
 
 fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
 
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
@@ -99,15 +149,27 @@ fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
 
 fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
 
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
@@ -119,15 +181,27 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
 
 fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
     val list = arrayListOf<MoviesDto>()
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
 
     for (item in results) {
+
+        val voteAverage = item.voteAverage?.let {
+            it.toFloat() / 2
+        } ?: 0f
+
+        val genres = arrayListOf<String>()
+        for ((id, genre) in Constants.genreMap) {
+            if (item.genreIds.contains(id)) {
+                genres.add(genre)
+            }
+        }
+        val genreString = genres.joinToString(", ")
 
         val dto = MoviesDto(
             item.id,
             item.title,
-            item.genreIds,
-            item.voteAverage,
+            genreString,
+            voteAverage,
             item.posterPath,
             favoriteSet.contains(item.id.toLong())
         )
@@ -140,7 +214,7 @@ fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
 }
 
 fun MoviesDto.checkIsFav() {
-    val favoriteSet = favorites.toSet()
+    val favoriteSet = favorites
     isFavorite = favoriteSet.contains(id.toLong())
 }
 
@@ -165,16 +239,23 @@ fun MovieDetailResponse.toDetailsDto(): MovieDetailDto {
 }
 
 fun MovieDetailResponse.toMovieDto(): MoviesDto {
-    val favoriteSet = favorites.toSet()
-    val genres = arrayListOf<Int>()
+    val favoriteSet = favorites
+
+    val genres = arrayListOf<String>()
     for (item in this.genres) {
-        genres.add(item.id)
+        genres.add(item.name)
     }
+    val genreString = genres.joinToString(", ")
+
+
+    val voteAverage = voteAverage?.let {
+        it.toFloat() / 2
+    } ?: 0f
 
     return MoviesDto(
         id,
         title,
-        genres,
+        genreString,
         voteAverage,
         posterPath,
         favoriteSet.contains(id.toLong())

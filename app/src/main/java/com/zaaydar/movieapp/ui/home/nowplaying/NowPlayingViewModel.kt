@@ -4,8 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.model.nowplaying.NowPlayingResponse
-import com.zaaydar.movieapp.util.toMoviesDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -33,11 +31,11 @@ class NowPlayingViewModel @Inject constructor(
         disposable.add(
             movieRepository.getNowPlayings(nowPlayingPage).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<NowPlayingResponse>() {
-                    override fun onSuccess(t: NowPlayingResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
                         nowPlayingError.value = false
                         nowPlayingLoading.value = false
-                        nowPlayingMovies.value = t.toMoviesDto()
+                        nowPlayingMovies.value = t
                         nowPlayingPage++
                     }
 
@@ -59,11 +57,11 @@ class NowPlayingViewModel @Inject constructor(
             movieRepository.getNowPlayings(nowPlayingPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<NowPlayingResponse>() {
-                    override fun onSuccess(t: NowPlayingResponse) {
+                .subscribeWith(object : DisposableSingleObserver<List<MoviesDto>>() {
+                    override fun onSuccess(t: List<MoviesDto>) {
                         nowPlayingError.value = false
                         nowPlayingLoadingNext.value = false
-                        nowPlayingMovies.value = t.toMoviesDto()
+                        nowPlayingMovies.value = t
                         nowPlayingPage++
                     }
 

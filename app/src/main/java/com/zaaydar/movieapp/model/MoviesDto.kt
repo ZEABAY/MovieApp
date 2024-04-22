@@ -8,9 +8,9 @@ data class MoviesDto(
     @SerializedName("title")
     val title: String,
     @SerializedName("genre_ids")
-    val genreIds: List<Int>,
+    val genreStrings: String,
     @SerializedName("vote_average")
-    val voteAverage: Double?,
+    val voteAverage: Float,
     @SerializedName("poster_path")
     val posterPath: String?,
     @SerializedName("is_favorite")
