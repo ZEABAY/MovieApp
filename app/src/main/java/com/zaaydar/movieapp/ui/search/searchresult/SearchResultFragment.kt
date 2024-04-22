@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentSearchResultBinding
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +18,7 @@ class SearchResultFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchResultBinding
     private lateinit var searchResultViewModel: SearchResultViewModel
-    private val searchResultAdapter by lazy { SearchResultAdapter() }
+    private val searchResultAdapter by lazy { MovieListsAdapter() }
 
     private var searchText = ""
 
@@ -78,7 +79,7 @@ class SearchResultFragment : Fragment() {
                 binding.apply {
                     rvSearchResult.visibility = View.VISIBLE
                     pbSearchResultLoading.visibility = View.GONE
-                    searchResultAdapter.updateSearchResultMoviesList(movies)
+                    searchResultAdapter.updateMoviesList(movies)
                 }
             }
         }
