@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentCategoryBinding
+import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.util.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +21,7 @@ class CategoryResultFragment : Fragment() {
     private lateinit var binding: FragmentCategoryBinding
 
     private lateinit var categoryResultViewModel: CategoryResultViewModel
-    private val categoryResultAdapter by lazy { CategoryResultAdapter() }
+    private val categoryResultAdapter by lazy { MovieListsAdapter() }
     private var genre: Int? = null
 
     override fun onCreateView(
@@ -85,7 +86,7 @@ class CategoryResultFragment : Fragment() {
                     rvCategory.visibility = View.VISIBLE
                     pbCategoryLoading.visibility = View.GONE
                     pbCategoryLoadingNext.visibility = View.GONE
-                    categoryResultAdapter.updateCategoryList(movies)
+                    categoryResultAdapter.updateMoviesList(movies)
                 }
             }
         }
