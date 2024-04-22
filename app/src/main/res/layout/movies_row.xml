@@ -1,83 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:id="@+id/iwMovie"
-        android:layout_width="150dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:scaleType="centerCrop"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:importantForAccessibility="no"
-        app:srcCompat="@drawable/movieapp" />
+    <data>
+
+        <variable
+            name="Movie"
+            type="com.zaaydar.movieapp.model.MoviesDto" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/consLMovieDetails"
-        android:layout_width="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_height="215dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/card_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/iwMovie"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/tvMovieName"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/movie_name_holder"
-            android:textColor="@color/card_header"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@+id/tvMovieCategories"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvMovieCategories"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:maxWidth="180dp"
-            android:textSize="14sp"
-            android:text="@string/categories_holder"
-            android:textColor="@color/card_text"
-            app:layout_constraintBottom_toTopOf="@+id/rbRate"
-            app:layout_constraintStart_toStartOf="@+id/rbRate" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/iwFav"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/iwMovie"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:importantForAccessibility="no"
-            app:srcCompat="@drawable/emptyheart" />
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/movieapp" />
 
-        <RatingBar
-            android:id="@+id/rbRate"
-            style="?android:ratingBarStyleIndicator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            android:progressTint="#FFFF00"
-            android:stepSize="0.1"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/consLMovieDetails"
+            android:layout_width="0dp"
+            android:layout_height="215dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/card_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/iwMovie"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <TextView
+                android:id="@+id/tvMovieName"
+                android:layout_width="136dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@{Movie.title}"
+                android:textColor="@color/card_header"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="@+id/tvMovieCategories"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvMovieCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:maxWidth="180dp"
+                android:text="@{Movie.genreStrings}"
+                android:textColor="@color/card_text"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/rbRate"
+                app:layout_constraintStart_toStartOf="@+id/rbRate" />
+
+            <ImageView
+                android:id="@+id/iwFav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:importantForAccessibility="no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/emptyheart" />
+
+            <RatingBar
+                android:id="@+id/rbRate"
+                style="?android:ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="#FFFF00"
+                android:rating="@{Movie.voteAverage}"
+                android:stepSize="0.1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

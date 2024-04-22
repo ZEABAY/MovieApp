@@ -25,10 +25,7 @@ class MovieListsAdapter : RecyclerView.Adapter<MovieListsAdapter.MovieListsViewH
         fun bind(item: MoviesDto) {
             with(binding) {
 
-                tvMovieName.text = item.title
-                tvMovieCategories.text = item.genreStrings
-                rbRate.rating = item.voteAverage
-
+                movie = item
                 checkIwFav(item, iwFav)
 
                 item.posterPath?.let {
@@ -56,9 +53,11 @@ class MovieListsAdapter : RecyclerView.Adapter<MovieListsAdapter.MovieListsViewH
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListsViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+
         return MovieListsViewHolder(
             MoviesRowBinding.inflate(
-                LayoutInflater.from(parent.context), parent, false
+                inflater, parent, false
             )
         )
     }
