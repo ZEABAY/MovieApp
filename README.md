@@ -2,7 +2,7 @@
 
 TMDB API kullanılarak geliştirilmiş bir film keşif uygulamasıdır. Kullanıcılar, çeşitli filmleri keşfedebilir, arama yapabilir, detayları görüntüleyebilir favorilere ekleyebilirler ve fragmanlarını izleyebilirler.
 
-| ![1](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/login.png) | ![2](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Home.png) | ![3](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Search.png) | ![4](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Detail.png) |
+| ![1](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Login.png) | ![2](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Home.png) | ![3](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Search.png) | ![4](https://raw.githubusercontent.com/ZEABAY/MovieApp/main/secreenShoots/Detail.png) |
 |---|---|---|---|
 | Login | Home | Search | Detail |
 
