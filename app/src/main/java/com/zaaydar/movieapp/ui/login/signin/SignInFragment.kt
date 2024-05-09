@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -18,25 +17,15 @@ import com.zaaydar.movieapp.databinding.FragmentSignInBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
 import com.zaaydar.movieapp.util.Constants.favorites
 import com.zaaydar.movieapp.util.Constants.userUUID
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 
 class SignInFragment : Fragment() {
 
     private lateinit var binding: FragmentSignInBinding
     private lateinit var auth: FirebaseAuth
-    private var isSignIn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
-
-        //val currentUser = auth.currentUser
-
-        //if (currentUser != null) intentFromMainToHome()
-
-
     }
 
     override fun onCreateView(
@@ -56,52 +45,41 @@ class SignInFragment : Fragment() {
         }
 
         binding.btnSignIn.setOnClickListener { signIn() }
-
     }
 
     private fun signIn() {
-        if (isSignIn) return
-
         val email = binding.etUserMail.text.toString()
         val password = binding.etUserPassword.text.toString()
         binding.etHeader.text = getString(R.string.signing_in)
-        isSignIn = true
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            lifecycleScope.launch(Dispatchers.IO) {
-                try {
-                    val authResult = auth.signInWithEmailAndPassword(email, password).await()
+            auth.signInWithEmailAndPassword(email, password).addOnSuccessListener { authResult ->
                     authResult.user?.let { user ->
                         userUUID = user.uid
                     }
 
-                    val documentSnapshot = FirebaseFirestore.getInstance()
-                        .collection("favoriteMovies")
-                        .document(userUUID)
-                        .get().await()
-
-                    if (documentSnapshot.exists()) {
-                        favorites = (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
-                        println(favorites)
-                    }
-
-                    launch(Dispatchers.Main) {
-                        intentFromMainToHome()
-                    }
-                } catch (e: Exception) {
-                    launch(Dispatchers.Main) {
-                        Toast.makeText(
-                            context,
-                            e.localizedMessage,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        binding.etHeader.text = getString(R.string.sign_in)
-                    }
-                } finally {
+                FirebaseFirestore.getInstance().collection("favoriteMovies").document(userUUID)
+                        .get().addOnSuccessListener { documentSnapshot ->
+                            if (documentSnapshot.exists()) {
+                                favorites =
+                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
+                                println(favorites)
+                            }
+                            intentFromMainToHome()
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(
+                                context, e.localizedMessage, Toast.LENGTH_SHORT
+                            ).show()
+                            binding.etHeader.text = getString(R.string.sign_in)
+                            binding.btnSignIn.isEnabled = true
+                        }
+                }.addOnFailureListener { e ->
+                    Toast.makeText(
+                        context, e.localizedMessage, Toast.LENGTH_SHORT
+                    ).show()
+                    binding.etHeader.text = getString(R.string.sign_in)
                     binding.btnSignIn.isEnabled = true
-                    isSignIn = false
                 }
-            }
         } else {
             Toast.makeText(
                 context,
@@ -109,7 +87,6 @@ class SignInFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             binding.btnSignIn.isEnabled = true
-            isSignIn = false
         }
     }
 

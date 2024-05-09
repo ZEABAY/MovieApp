@@ -22,10 +22,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHold
         fun bind(item: MoviesDto) {
             with(binding) {
 
-                tvMovieName.text = item.title
-                tvMovieCategories.text = item.genreStrings
-                rbRate.rating = item.voteAverage
-
+                movie = item
                 checkIwFav(item, iwFav)
 
                 item.posterPath?.let {
@@ -33,9 +30,7 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHold
                 }
 
                 iwFav.setOnClickListener {
-                    if (Constants.favorites.contains(item.id.toLong())) Constants.favorites.remove(
-                        item.id.toLong()
-                    )
+                    if (Constants.favorites.contains(item.id.toLong())) Constants.favorites.remove(item.id.toLong())
                     else Constants.favorites.add(item.id.toLong())
                     item.isFavorite = !item.isFavorite
                     checkIwFav(item, iwFav)
