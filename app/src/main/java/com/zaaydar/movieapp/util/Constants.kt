@@ -1,7 +1,6 @@
 package com.zaaydar.movieapp.util
 
 object Constants {
-
     const val BASE_URL = "https://api.themoviedb.org/3/"
     const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/original/"
     const val MOVIE = "movie/"
@@ -17,10 +16,4 @@ object Constants {
     const val LANG_TR = "tr-TR"
     const val SEARCH_MOVIE = "search/movie"
     const val VIDEOS = "/videos"
-
-
-    val genreMap = mutableMapOf<Int, String>()
-    var userUUID: String = ""
-    var favorites = arrayListOf<Long>()
-
 }

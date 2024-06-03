@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.zaaydar.movieapp.data.repository.MovieRepository
 import com.zaaydar.movieapp.model.MoviesDto
 import com.zaaydar.movieapp.model.moviedetail.MovieDetailResponse
-import com.zaaydar.movieapp.util.Constants.favorites
+import com.zaaydar.movieapp.util.MySingleton.favorites
 import com.zaaydar.movieapp.util.toMovieDto
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -28,7 +28,6 @@ class FavoritesViewModel @Inject constructor(
 
 
     fun getFavoriteMoviesFromApi() {
-        println(favorites.toString())
         favoritesLoading.value = true
         val movieDetailsList = mutableListOf<MoviesDto>()
 

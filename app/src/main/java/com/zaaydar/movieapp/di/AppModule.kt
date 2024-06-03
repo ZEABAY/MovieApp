@@ -2,7 +2,7 @@ package com.zaaydar.movieapp.di
 
 import com.zaaydar.movieapp.data.remote.MovieApiInterface
 import com.zaaydar.movieapp.data.repository.MovieRepository
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,7 +29,7 @@ object AppModule {
             .addInterceptor(logging)
             .build()
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(client)

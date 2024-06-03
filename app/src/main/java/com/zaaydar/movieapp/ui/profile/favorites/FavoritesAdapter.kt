@@ -8,7 +8,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.MySingleton.favorites
+import com.zaaydar.movieapp.util.MySingleton.userUUID
 import com.zaaydar.movieapp.util.imageInto
 
 class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
@@ -30,15 +31,15 @@ class FavoritesAdapter : RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHold
                 }
 
                 iwFav.setOnClickListener {
-                    if (Constants.favorites.contains(item.id.toLong())) Constants.favorites.remove(item.id.toLong())
-                    else Constants.favorites.add(item.id.toLong())
+                    if (favorites.contains(item.id.toLong())) favorites.remove(item.id.toLong())
+                    else favorites.add(item.id.toLong())
                     item.isFavorite = !item.isFavorite
                     checkIwFav(item, iwFav)
 
                     FirebaseFirestore.getInstance()
                         .collection("favoriteMovies")
-                        .document(Constants.userUUID)
-                        .set(hashMapOf("favs" to Constants.favorites))
+                        .document(userUUID)
+                        .set(hashMapOf("favs" to favorites))
                 }
             }
         }

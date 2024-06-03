@@ -12,7 +12,7 @@ import com.zaaydar.movieapp.databinding.FragmentPopularBinding
 import com.zaaydar.movieapp.model.MovieGenre
 import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
 import com.zaaydar.movieapp.ui.home.HomeFragmentDirections
-import com.zaaydar.movieapp.util.Constants.genreMap
+import com.zaaydar.movieapp.util.MySingleton.genreMap
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

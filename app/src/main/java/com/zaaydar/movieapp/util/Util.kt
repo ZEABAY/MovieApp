@@ -15,7 +15,9 @@ import com.zaaydar.movieapp.model.popular.PopularMoviesResponse
 import com.zaaydar.movieapp.model.searchresult.SearchResultResponse
 import com.zaaydar.movieapp.model.toprated.TopRatedResponse
 import com.zaaydar.movieapp.model.upcoming.UpcomingResponse
-import com.zaaydar.movieapp.util.Constants.favorites
+import com.zaaydar.movieapp.util.Constants.POSTER_BASE_URL
+import com.zaaydar.movieapp.util.MySingleton.favorites
+import com.zaaydar.movieapp.util.MySingleton.genreMap
 
 
 fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
@@ -29,7 +31,7 @@ fun PopularMoviesResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -61,7 +63,7 @@ fun NowPlayingResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -93,7 +95,7 @@ fun CategoryResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -126,7 +128,7 @@ fun TopRatedResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -158,7 +160,7 @@ fun UpcomingResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -190,7 +192,7 @@ fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
         } ?: 0f
 
         val genres = arrayListOf<String>()
-        for ((id, genre) in Constants.genreMap) {
+        for ((id, genre) in genreMap) {
             if (item.genreIds.contains(id)) {
                 genres.add(genre)
             }
@@ -208,8 +210,6 @@ fun SearchResultResponse.toMoviesDto(): List<MoviesDto> {
 
         list.add(dto)
     }
-
-    println(list.toString())
     return list
 }
 
@@ -273,7 +273,7 @@ fun Context.imageInto(url: String, into: ImageView) {
 
     Glide.with(this)
         .setDefaultRequestOptions(options)
-        .load(Constants.POSTER_BASE_URL + url)
+        .load(POSTER_BASE_URL + url)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(into)
 }

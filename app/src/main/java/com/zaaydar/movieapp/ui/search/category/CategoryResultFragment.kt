@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.FragmentCategoryBinding
 import com.zaaydar.movieapp.ui.adapters.MovieListsAdapter
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.MySingleton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,7 +41,7 @@ class CategoryResultFragment : Fragment() {
             genre = CategoryResultFragmentArgs.fromBundle(it).genre
         }
 
-        binding.tvGenreName.text = Constants.genreMap[genre]
+        binding.tvGenreName.text = MySingleton.genreMap[genre]
 
         if (genre != null) {
             categoryResultViewModel = ViewModelProvider(this)[CategoryResultViewModel::class.java]

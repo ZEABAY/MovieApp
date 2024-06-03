@@ -15,7 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.FragmentSignUpBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.MySingleton.favorites
+import com.zaaydar.movieapp.util.MySingleton.userUUID
 
 
 class SignUpFragment : Fragment() {
@@ -61,18 +62,17 @@ class SignUpFragment : Fragment() {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener { authResult ->
                     authResult.user?.let { user ->
-                        Constants.userUUID = user.uid
+                        userUUID = user.uid
                     }
 
                     FirebaseFirestore.getInstance()
                         .collection("favoriteMovies")
-                        .document(Constants.userUUID)
+                        .document(userUUID)
                         .get().addOnSuccessListener { documentSnapshot ->
                             if (documentSnapshot.exists()) {
-                                Constants.favorites =
-                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
-
-                                println(Constants.favorites)
+                                @Suppress("UNCHECKED_CAST")
+                                favorites =
+                                    documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf()
                             }
 
                             val intent = Intent(context, MainActivity::class.java)

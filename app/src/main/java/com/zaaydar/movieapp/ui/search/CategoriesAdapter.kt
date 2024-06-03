@@ -4,18 +4,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.zaaydar.movieapp.databinding.CategoriesRowBinding
-import com.zaaydar.movieapp.util.Constants
+import com.zaaydar.movieapp.util.MySingleton
 
 class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
-    private var genreMap = Constants.genreMap
+    private var genreMap = MySingleton.genreMap
     var itemClick: (Int) -> Unit = {}
 
 
     class CategoriesViewHolder(private var binding: CategoriesRowBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(key: Int, value: String) {
+        fun bind(value: String) {
             with(binding) {
                 tvCategoryName.text = value
 
@@ -41,7 +41,6 @@ class CategoriesAdapter : RecyclerView.Adapter<CategoriesAdapter.CategoriesViewH
         val categoriesList = genreMap[genre]
         categoriesList?.let {
             holder.bind(
-                genre,
                 it
             )
 

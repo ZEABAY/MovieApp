@@ -15,8 +15,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.FragmentSignInBinding
 import com.zaaydar.movieapp.ui.main.MainActivity
-import com.zaaydar.movieapp.util.Constants.favorites
-import com.zaaydar.movieapp.util.Constants.userUUID
+import com.zaaydar.movieapp.util.MySingleton.favorites
+import com.zaaydar.movieapp.util.MySingleton.userUUID
 
 class SignInFragment : Fragment() {
 
@@ -61,9 +61,9 @@ class SignInFragment : Fragment() {
                 FirebaseFirestore.getInstance().collection("favoriteMovies").document(userUUID)
                         .get().addOnSuccessListener { documentSnapshot ->
                             if (documentSnapshot.exists()) {
+                                @Suppress("UNCHECKED_CAST")
                                 favorites =
-                                    (documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf())
-                                println(favorites)
+                                    documentSnapshot["favs"] as? ArrayList<Long> ?: arrayListOf()
                             }
                             intentFromMainToHome()
                         }.addOnFailureListener { e ->

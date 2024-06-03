@@ -9,8 +9,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.zaaydar.movieapp.R
 import com.zaaydar.movieapp.databinding.MoviesRowBinding
 import com.zaaydar.movieapp.model.MoviesDto
-import com.zaaydar.movieapp.util.Constants.favorites
-import com.zaaydar.movieapp.util.Constants.userUUID
+import com.zaaydar.movieapp.util.MySingleton.favorites
+import com.zaaydar.movieapp.util.MySingleton.userUUID
 import com.zaaydar.movieapp.util.checkIsFav
 import com.zaaydar.movieapp.util.imageInto
 

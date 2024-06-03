@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
                 bottomNavigationView2, navController
             )
 
-            navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            navController.addOnDestinationChangedListener { _, destination, _ ->
                 when (destination.id) {
 
                     R.id.detailFragment -> {
