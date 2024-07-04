@@ -8,7 +8,7 @@ TMDB API kullanılarak geliştirilmiş bir film keşif uygulamasıdır. Kullanı
 
 ## Özellikler
 
-- **Film Keşfi**: Popüler, en yüksek puan alan, en son çıkan gibi farklı kategorilere göre filmleri ve listeleme.
+- **Film Keşfi**: Popüler, en yüksek puan alan, en son çıkan gibi farklı kategorilere göre filmleri listeleme.
   
 - **Arama**: Arama yapma ve sonuçları alma.
   
